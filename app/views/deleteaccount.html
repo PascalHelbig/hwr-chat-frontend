@@ -1,0 +1,23 @@
+<md-toolbar class="md-primary md-whiteframe-z3"">
+  <div class="md-toolbar-tools">
+    <md-button layout="row" layout-align="start center" ui-sref="layout_small.settings">
+      <i class="mdi mdi-arrow-left"></i>
+      {{'DeleteAccount' | translate}}
+    </md-button>
+    <span flex></span>
+    <md-button ng-click="confirmDeleteAccount()">
+      <i class="mdi mdi-check"></i>
+    </md-button>
+  </div>
+</md-toolbar>
+
+<md-content>
+  <md-input-container>
+    <label>{{'Email' | translate}}</label>
+    <input type="email" ng-model="user.email">
+  </md-input-container>
+  <md-input-container>
+    <label>{{'PW' | translate}}</label>
+    <input type="password" ng-model="deleteAccount.pw">
+  </md-input-container>
+</md-content>

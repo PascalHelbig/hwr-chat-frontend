@@ -1,0 +1,55 @@
+<md-sidenav md-component-id="left" class="md-sidenav-left" md-is-open="false"
+            ng-include="'views/sidenav.html'"></md-sidenav>
+
+<md-toolbar xmlns="http://www.w3.org/1999/html">
+  <div class="md-toolbar-tools md-whiteframe-z4">
+    <img class="logo" src="images/hwr_quadrat.png"> HWR-Chat
+    <span flex></span>
+    <md-button ng-click="openSideNav()">
+      <i class="mdi mdi-menu" ></i>
+    </md-button>
+  </div>
+</md-toolbar>
+<div>
+  <md-button class="md-primary md-fab md-fab-bottom-left" aria-label="FAB" ui-sref="layout_small.newchat">
+    <!--ng-click="showNewChat($event)"> -->
+    <i class="mdi mdi-pencil"></i>
+  </md-button>
+</div>
+<md-content style="position:absolute; top:64px; bottom:0" ng-style="{'width' : (isMobile ? '100%' : '33%')}" scrollable>
+
+  <div flex-item="6" class="mt++">
+    <div class="divider divider--dark"></div>
+    <ul class="list mt++" ng-repeat="contact in contacts">
+      <button class="btn btn--m btn--blue btn--flat" lx-ripple ng-click="setChatName(contact.unterhaltungsName)">
+      <li class="list-row list-row--has-separator" ui-sref="layout_2screens.chat({id: contact.unterhaltungsID})">
+        <div class="list-row__primary">
+          <img src="/images/yeoman.png" width="40" height="40" class="img-round">
+        </div>
+        <div class="list-row__content">
+          <span class="display-block">{{contact.unterhaltungsName}}</span>
+          <span class="display-block fs-body-1 tc-black-2">{{contact.timestamp}}</span>
+        </div>
+      </li>
+      </button>
+      <div class="divider divider--dark"></div>
+    </ul>
+  </div>
+</md-content>
+
+<!--Versuch alles ng-material umzustellen aber die ui-sref weiterleitung geht nicht..
+<md-content style="position:absolute; top:64px; bottom:0" ng-style="{'width' : (isMobile ? '100%' : '33%')}" scrollable>
+  <md-list>
+    <md-list-item class="md-2-line" ng-repeat="contact in contacts" ng-click="setChatName(contact.unterhaltungsName)" ui-sref="layout_2screens.chat({id: contact.unterhaltungsID})">
+      <img src="/images/yeoman.png" width="40" height="40" class="img-round">
+      <div class="md-list-item-text">
+        <h3>{{contact.unterhaltungsName}}</h3>
+        <p>{{contact.timestamp}}</p>
+      </div>
+      <md-divider></md-divider>
+    </md-list-item>
+  </md-list>
+</md-content>-->
+
+
+

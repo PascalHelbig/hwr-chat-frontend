@@ -1,0 +1,25 @@
+<md-toolbar class="md-whiteframe-z3">
+  <div class="md-toolbar-tools">
+    <img class="logo" src="images/hwr_quadrat.png">
+    <span>HWR Chat</span>
+    <span flex></span>
+    <md-button ng-click="login()">
+      {{'Next' | translate}}
+      <i class="mdi mdi-check"></i>
+    </md-button>
+  </div>
+</md-toolbar>
+
+<md-content>
+  <md-input-container>
+    <label>{{'Email' | translate}}</label>
+    <input type="text" ng-model="user.email">
+  </md-input-container>
+  <md-input-container>
+    <label>{{'PW' | translate}}</label>
+    <input type="password" ng-model="user.pw">
+  </md-input-container>
+  <md-checkbox aria-label="Angemeldet bleiben" ng-model="user.autologin">
+    {{'SignedIn' | translate}}
+  </md-checkbox>
+</md-content>

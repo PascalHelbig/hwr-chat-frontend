@@ -1,0 +1,89 @@
+<!doctype html>
+<html class="no-js">
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width">
+  <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+  <!-- build:css(.) styles/vendor.css -->
+  <!-- bower:css -->
+  <link rel="stylesheet" href="bower_components/angular-material/angular-material.css" />
+  <link rel="stylesheet" href="bower_components/nanoscroller/bin/css/nanoscroller.css" />
+  <link rel="stylesheet" href="bower_components/ng-embed/src/ng-embed.css" />
+  <link rel="stylesheet" href="bower_components/ng-emoticons/src/ng-emoticons.css" />
+  <link rel="stylesheet" href="bower_components/mdi/css/materialdesignicons.css" />
+  <link rel="stylesheet" href="bower_components/mdi/css/materialdesignicons.min.css" />
+  <link rel="stylesheet" href="bower_components/lumx/dist/lumx.css" />
+  <!-- endbower -->
+  <!-- endbuild -->
+  <!-- build:css(.tmp) styles/main.css -->
+  <link rel="stylesheet" href="styles/main.css">
+  <!-- endbuild -->
+
+</head>
+<body ng-app="hwrChatApp">
+<!--[if lt IE 7]>
+<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
+  your browser</a> to improve your experience.</p>
+<![endif]-->
+
+<div ui-view></div>
+
+
+<!-- build:js(.) scripts/vendor.js -->
+<!-- bower:js -->
+<script src="bower_components/jquery/dist/jquery.js"></script>
+<script src="bower_components/angular/angular.js"></script>
+<script src="bower_components/angular-animate/angular-animate.js"></script>
+<script src="bower_components/angular-aria/angular-aria.js"></script>
+<script src="bower_components/angular-material/angular-material.js"></script>
+<script src="bower_components/angular-local-storage/dist/angular-local-storage.js"></script>
+<script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+<script src="bower_components/angular-scroll-glue/src/scrollglue.js"></script>
+<script src="bower_components/nanoscroller/bin/javascripts/jquery.nanoscroller.js"></script>
+<script src="bower_components/angular-nanoscroller-13/scrollable.js"></script>
+<script src="bower_components/angular-translate/angular-translate.js"></script>
+<script src="bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.js"></script>
+<script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+<script src="bower_components/ng-embed/src/ng-embed.js"></script>
+<script src="bower_components/ng-emoticons/src/ng-emoticons.js"></script>
+<script src="bower_components/velocity/velocity.js"></script>
+<script src="bower_components/velocity/velocity.ui.js"></script>
+<script src="bower_components/moment/moment.js"></script>
+<script src="bower_components/lumx/dist/lumx.js"></script>
+<script src="bower_components/angular-cookies/angular-cookies.js"></script>
+<script src="bower_components/angular-translate-storage-cookie/angular-translate-storage-cookie.js"></script>
+<script src="bower_components/angular-translate-storage-local/angular-translate-storage-local.js"></script>
+<!-- endbower -->
+<!-- endbuild -->
+
+<!-- build:js({.tmp,app}) scripts/scripts.js -->
+<script src="scripts/app.js"></script>
+<script src="scripts/controllers/login.js"></script>
+<script src="scripts/services/screenService.js"></script>
+<script src="scripts/services/authService.js"></script>
+<script src="scripts/controllers/register.js"></script>
+<script src="scripts/controllers/chat.js"></script>
+<script src="scripts/controllers/contacts.js"></script>
+<script src="scripts/controllers/forgotpassword.js"></script>
+<script src="scripts/controllers/info.js"></script>
+<script src="scripts/controllers/settings.js"></script>
+<script src="scripts/controllers/changepw.js"></script>
+<script src="scripts/controllers/confirm.js"></script>
+<script src="scripts/controllers/newchat.js"></script>
+<script src="scripts/controllers/newGroup.js"></script>
+<script src="scripts/controllers/groupname.js"></script>
+<script src="scripts/controllers/userData.js"></script>
+
+<script src="scripts/services/httpservice.js"></script>
+<script src="scripts/directives/langbox.js"></script>
+<script src="scripts/services/userservice.js"></script>
+<script src="scripts/services/contactservice.js"></script>
+<script src="scripts/services/chatBuildRefactorService.js"></script>
+<script src="scripts/controllers/deleteaccount.js"></script>
+<script src="scripts/controllers/renamechat.js"></script>
+<!-- endbuild -->
+
+</body>
+</html>

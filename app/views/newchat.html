@@ -1,0 +1,38 @@
+<md-toolbar class="md-primary md-whiteframe-z3"">
+  <div class="md-toolbar-tools">
+    <md-button layout="row" layout-align="start center" ui-sref="layout_2screens.contacts">
+      <i class="mdi mdi-arrow-left"></i>
+      {{'NewChat' | translate}}
+    </md-button>
+    <span flex></span>
+    <md-button ng-click="newChat()">
+      <i class="mdi mdi-check"></i>
+    </md-button>
+  </div>
+</md-toolbar>
+
+<md-content>
+  <md-input-container layout="row" layout-align="center center">
+    <md-button ui-sref="layout_small.newgroup" ng-click="resetGroupIDs()">
+      <i class="mdi icon--l mdi-account-multiple-plus"></i>{{'NewGroup' | translate}}
+    </md-button>
+  </md-input-container>
+  <md-input-container>
+    <label >{{'Search' | translate}}</label>
+    <input type="text" ng-model="query">
+  </md-input-container>
+</md-content>
+
+<md-list>
+  <div ng-repeat="contact in contacts | filter:query">
+    <md-list-item>
+      <md-button  style="width:100%" ng-click="setUserID(contact.userID)">
+        <div class="md-list-item-text">
+          <h4>{{contact.vorname +" "+ contact.nachname}}</h4>
+        </div>
+      </md-button>
+    </md-list-item>
+    <md-divider></md-divider>
+  </div>
+</md-list>
+

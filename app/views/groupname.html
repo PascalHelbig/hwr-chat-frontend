@@ -1,0 +1,19 @@
+<md-toolbar class="md-primary md-whiteframe-z3"">
+  <div class="md-toolbar-tools">
+    <md-button layout="row" layout-align="start center" ui-sref="layout_small.newgroup">
+      <i class="mdi mdi-arrow-left"></i>
+      {{'Groupname' | translate}}
+    </md-button>
+    <span flex></span>
+    <md-button ng-click="newGroupChat()">
+      <i class="mdi mdi-check"></i>
+    </md-button>
+  </div>
+</md-toolbar>
+
+<md-content>
+  <md-input-container>
+    <label>{{'Groupname' | translate}}</label>
+    <input type="text" ng-model="user.groupname">
+  </md-input-container>
+</md-content>

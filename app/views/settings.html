@@ -1,0 +1,45 @@
+<md-toolbar class="md-primary md-whiteframe-z3"">
+  <div class="md-toolbar-tools">
+    <md-button layout="row" layout-align="start center" ui-sref="layout_2screens.contacts">
+      <i class="mdi mdi-arrow-left"></i>
+      {{'Settings' | translate}}
+    </md-button>
+    <span flex></span>
+    <md-button layout="row" layout-align="start center" ui-sref="layout_small.confirm" ng-click="gotoConfirm()">
+      <i class="mdi mdi-check"></i>
+    </md-button>
+  </div>
+</md-toolbar>
+
+<md-content>
+  <md-input-container>
+    <label >{{'Name' | translate}}</label>
+    <input type="text" ng-model="user.nachname">
+  </md-input-container>
+  <md-input-container>
+    <label>{{'FirstName' | translate}}</label>
+    <input type="text" ng-model="user.vorname">
+  </md-input-container>
+  <md-input-container>
+    <label>{{'Email' | translate}}</label>
+    <input type="email" ng-model="user.email">
+  </md-input-container>
+  <md-input-container>
+    <label>{{'Relation' | translate}}</label>
+    <input type="text" ng-model="user.verhaeltnis">
+  </md-input-container>
+  <md-input-container>
+    <label>{{'Phone' | translate}}</label>
+    <input type="text" ng-model="user.telefon">
+  </md-input-container>
+  <md-input-container>
+  <md-button layout="row" layout-align="center center" ui-sref="layout_small.changepw">
+    {{'ChangePW' | translate}}
+  </md-button>
+  </md-input-container>
+  <md-input-container>
+    <md-button layout="row" layout-align="center center" ui-sref="layout_small.deleteaccount">
+      {{'DeleteAcc' | translate}}
+    </md-button>
+  </md-input-container>
+</md-content>
