@@ -1,4 +1,4 @@
-// Generated on 2015-03-10 using generator-angular 0.11.1
+// Generated on 2015-08-31 using generator-angular 0.12.1
 'use strict';
 
 // # Globbing
@@ -9,34 +9,24 @@
 
 module.exports = function (grunt) {
 
-  // Load grunt tasks automatically
-  require('load-grunt-tasks')(grunt);
-
   // Time how long tasks take. Can help when optimizing build times
   require('time-grunt')(grunt);
+
+  // Automatically load required Grunt tasks
+  require('jit-grunt')(grunt, {
+    useminPrepare: 'grunt-usemin',
+    ngtemplates: 'grunt-angular-templates',
+    cdnify: 'grunt-google-cdn'
+  });
 
   // Configurable paths for the application
   var appConfig = {
     app: require('./bower.json').appPath || 'app',
-    dist: 'dist',
-    distPHP: 'dist-php'
+    dist: 'dist'
   };
 
   // Define the configuration for all the tasks
   grunt.initConfig({
-
-    php: {
-      dist: {
-        options: {
-          keepalive: false,
-          open: true,
-          base: '<%= yeoman.distPHP %>',
-          hostname: 'localhost',
-          port: 5000,
-          livereload: '<%= connect.options.livereload %>'
-        }
-      }
-    },
 
     // Project settings
     yeoman: appConfig,
@@ -45,11 +35,11 @@ module.exports = function (grunt) {
     watch: {
       bower: {
         files: ['bower.json'],
-        tasks: ['clean:distPHPBower', 'copy:distPHPBower', 'wiredep']
+        tasks: ['wiredep']
       },
       js: {
         files: ['<%= yeoman.app %>/scripts/{,*/}*.js'],
-        tasks: ['clean:distPHPApp', 'copy:distPHPApp'],
+        tasks: ['newer:jshint:all'],
         options: {
           livereload: '<%= connect.options.livereload %>'
         }
@@ -60,15 +50,7 @@ module.exports = function (grunt) {
       },
       styles: {
         files: ['<%= yeoman.app %>/styles/{,*/}*.css'],
-        tasks: ['clean:distPHPApp', 'copy:distPHPApp']
-      },
-      views: {
-        files: ['<%= yeoman.app %>/views/{,*/}*.html'],
-        tasks: ['clean:distPHPApp', 'copy:distPHPApp']
-      },
-      php: {
-        files: ['../php/**'],
-        tasks: ['clean:distPHPBackend', 'copy:distPHPBackend']
+        tasks: ['newer:copy:styles', 'autoprefixer']
       },
       gruntfile: {
         files: ['Gruntfile.js']
@@ -168,43 +150,6 @@ module.exports = function (grunt) {
           ]
         }]
       },
-      distPHP: {
-        files: [{
-          dot: true,
-          src: [
-            '<%= yeoman.distPHP %>/{,*/}*'
-          ]
-        }]
-      },
-      distPHPApp: {
-        files: [{
-          dot: true,
-          src: [
-            '<%= yeoman.distPHP %>/images/**',
-            '<%= yeoman.distPHP %>/lang/**',
-            '<%= yeoman.distPHP %>/scripts/**',
-            '<%= yeoman.distPHP %>/styles/**',
-            '<%= yeoman.distPHP %>/views/**',
-            '<%= yeoman.distPHP %>/index.html'
-          ]
-        }]
-      },
-      distPHPBower: {
-        files: [{
-          dot: true,
-          src: [
-            '<%= yeoman.distPHP %>/bower_components/**'
-          ]
-        }]
-      },
-      distPHPBackend: {
-        files: [{
-          dot: true,
-          src: [
-            '<%= yeoman.distPHP %>/php/**'
-          ]
-        }]
-      },
       server: '.tmp'
     },
 
@@ -215,7 +160,7 @@ module.exports = function (grunt) {
       },
       server: {
         options: {
-          map: true
+          map: true,
         },
         files: [{
           expand: true,
@@ -238,13 +183,13 @@ module.exports = function (grunt) {
     wiredep: {
       app: {
         src: ['<%= yeoman.app %>/index.html'],
-        ignorePath: /\.\.\//
+        ignorePath:  /\.\.\//
       },
       test: {
         devDependencies: true,
         src: '<%= karma.unit.configFile %>',
-        ignorePath: /\.\.\//,
-        fileTypes: {
+        ignorePath:  /\.\.\//,
+        fileTypes:{
           js: {
             block: /(([\s\t]*)\/{2}\s*?bower:\s*?(\S*))(\n|\r|.)*?(\/{2}\s*endbower)/gi,
             detect: {
@@ -291,14 +236,18 @@ module.exports = function (grunt) {
 
     // Performs rewrites based on filerev and the useminPrepare configuration
     usemin: {
-      html: ['<%= yeoman.dist %>/{,*/}*.html', '<%= yeoman.dist %>/views/{,*/}*.html'],
+      html: ['<%= yeoman.dist %>/{,*/}*.html'],
       css: ['<%= yeoman.dist %>/styles/{,*/}*.css'],
+      js: ['<%= yeoman.dist %>/scripts/{,*/}*.js'],
       options: {
         assetsDirs: [
           '<%= yeoman.dist %>',
           '<%= yeoman.dist %>/images',
           '<%= yeoman.dist %>/styles'
-        ]
+        ],
+        patterns: {
+          js: [[/(images\/[^''""]*\.(png|jpg|jpeg|gif|webp|svg))/g, 'Replacing references to images']]
+        }
       }
     },
 
@@ -356,15 +305,27 @@ module.exports = function (grunt) {
           collapseWhitespace: true,
           conservativeCollapse: true,
           collapseBooleanAttributes: true,
-          removeCommentsFromCDATA: true,
-          removeOptionalTags: true
+          removeCommentsFromCDATA: true
         },
         files: [{
           expand: true,
           cwd: '<%= yeoman.dist %>',
-          src: ['*.html', 'views/{,*/}*.html'],
+          src: ['*.html'],
           dest: '<%= yeoman.dist %>'
         }]
+      }
+    },
+
+    ngtemplates: {
+      dist: {
+        options: {
+          module: 'angularKannWegApp',
+          htmlmin: '<%= htmlmin.dist.options %>',
+          usemin: 'scripts/scripts.js'
+        },
+        cwd: '<%= yeoman.app %>',
+        src: 'views/{,*/}*.html',
+        dest: '.tmp/templateCache.js'
       }
     },
 
@@ -400,7 +361,6 @@ module.exports = function (grunt) {
             '*.{ico,png,txt}',
             '.htaccess',
             '*.html',
-            'views/{,*/}*.html',
             'images/{,*/}*.{webp}',
             'styles/fonts/{,*/}*.*'
           ]
@@ -409,37 +369,13 @@ module.exports = function (grunt) {
           cwd: '.tmp/images',
           dest: '<%= yeoman.dist %>/images',
           src: ['generated/*']
-        }, {
-          expand: true,
-          cwd: 'bower_components/bootstrap/dist',
-          src: 'fonts/*',
-          dest: '<%= yeoman.dist %>'
         }]
       },
-      distPHPApp: {
-        files: [{
-          expand: true,
-          dot: true,
-          cwd: '<%= yeoman.app %>',
-          src: '**',
-          dest: '<%= yeoman.distPHP %>'
-        }]
-      },
-      distPHPBower: {
-        files: [{
-          expand: true,
-          cwd: 'bower_components/',
-          src: '**',
-          dest: '<%= yeoman.distPHP %>/bower_components'
-        }]
-      },
-      distPHPBackend: {
-        files: [{
-          expand: true,
-          cwd: '../php/',
-          src: '**',
-          dest: '<%= yeoman.distPHP %>/php'
-        }]
+      styles: {
+        expand: true,
+        cwd: '<%= yeoman.app %>/styles',
+        dest: '.tmp/styles/',
+        src: '{,*/}*.css'
       }
     },
 
@@ -467,39 +403,21 @@ module.exports = function (grunt) {
     }
   });
 
-  grunt.registerTask('serve', 'Run the PHP Server', function (target) {
+
+  grunt.registerTask('serve', 'Compile then start a connect web server', function (target) {
+    if (target === 'dist') {
+      return grunt.task.run(['build', 'connect:dist:keepalive']);
+    }
+
     grunt.task.run([
-      'clean:distPHPApp',
-      'clean:distPHPApp',
-      'clean:distPHPApp',
-      'copy:distPHPApp',
-      'copy:distPHPBower',
-      'copy:distPHPBackend',
-      'php',
+      'clean:server',
+      'wiredep',
+      'concurrent:server',
+      'autoprefixer:server',
+      'connect:livereload',
       'watch'
     ]);
   });
-
-  /**
-   * Alte Serve Funktion
-   **/
-  /*
-   grunt.registerTask('serve', 'Compile then start a connect web server', function (target) {
-   if (target === 'dist') {
-   return grunt.task.run(['build', 'connect:dist:keepalive']);
-   }
-
-   grunt.task.run([
-   'clean:server',
-   'wiredep',
-   'concurrent:server',
-   'autoprefixer:server',
-   'connect:livereload',
-   'php',
-   'watch'
-   ]);
-   });
-   */
 
   grunt.registerTask('server', 'DEPRECATED TASK. Use the "serve" task instead', function (target) {
     grunt.log.warn('The `server` task has been deprecated. Use `grunt serve` to start a server.');
@@ -521,6 +439,7 @@ module.exports = function (grunt) {
     'useminPrepare',
     'concurrent:dist',
     'autoprefixer',
+    'ngtemplates',
     'concat',
     'ngAnnotate',
     'copy:dist',
@@ -537,6 +456,4 @@ module.exports = function (grunt) {
     'test',
     'build'
   ]);
-
-  grunt.registerTask('php-start', ['php']);
 };
