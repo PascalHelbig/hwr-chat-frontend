@@ -6,3 +6,4 @@ dist-php
 bower_components
 coverage
 karma_html
+/.idea
