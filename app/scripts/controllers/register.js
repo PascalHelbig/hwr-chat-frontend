@@ -7,14 +7,17 @@
  * # RegisterCtrl
  * Controller of the hwrChatApp
  */
+
+//ToDo: NOCH FEHLERHAFT
 angular.module('hwrChatApp')
-  .controller('RegisterCtrl', function ($scope, httpService) {
-    $scope.user = {name :"", firstName : "", pw : "", confirmPw : "", email: ""};
-    $scope.signUP = function(){
-    console.log($scope.user);
-      /**
-       * Emailfunktion kann Backend aktuell nicht, daher kann die Funktionalität nicht getestet werden
-       */
-      httpService('register', {email: $scope.user.email, passwort: $scope.user.pw, nachname: $scope.user.name, vorname: $scope.user.firstName})
-    };
+  .controller('RegisterCtrl', function ($scope, Restangular) {
+    $scope.user = {lastname :"", firstName : "", password : "", confirmPw : "", email: ""};
+    $scope.signUP = function () {
+      Restangular.all('accounts').post($scope.user).then(function (user) {
+        $mdToast.showSimple('Registrierung erfolgreich');
+        $state.go('login');
+      }, function () {
+        $mdToast.showSimple('Fehler!');
+      });
+    }
   });
