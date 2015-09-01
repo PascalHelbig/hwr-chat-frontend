@@ -8,14 +8,14 @@
  * Controller of the hwrChatApp
  */
 angular.module('hwrChatApp')
-  .controller('LoginCtrl', function ($scope, $translate, authService, $mdToast, $state) {
-    $scope.user = {email: 'test@hwr-berlin.de', pw: '1234'};
+  .controller('LoginCtrl', function ($scope, $translate, authService, $mdToast, $state, Restangular) {
+    $scope.user = {email: 'test@hwr-berlin.de', password: '1234'};
 
     $scope.login = function () {
-      authService.login($scope.user).then(function () {
+      Restangular.all('accounts').customPOST($scope.user, 'login').then(function (user) {
         $mdToast.showSimple('Login erfolgreich');
         $state.go('layout_2screens.contacts');
-      }, function () {
+      }, function() {
         $mdToast.showSimple('Fehler!');
       });
     };
