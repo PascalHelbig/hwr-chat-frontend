@@ -19,11 +19,13 @@ angular
     'pascalprecht.translate',
     'ngEmbed',
     'ngEmoticons',
-    'lumx'
+    'lumx',
+    'restangular'
   ])
-  .config(function ($stateProvider, $urlRouterProvider, $windowProvider, $mdThemingProvider, $translateProvider, $httpProvider) {
+  .config(function ($stateProvider, $urlRouterProvider, $windowProvider, $mdThemingProvider, $translateProvider, $httpProvider, RestangularProvider) {
     $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded; charset=UTF-8';
     $httpProvider.defaults.headers.common['Content-Type'] = 'application/x-www-form-urlencoded; charset=UTF-8';
+    RestangularProvider.setBaseUrl('http://localhost:3000/api/');
 
     // Wenn Bildschirm Breite kleiner als 600px, dann mobile Ansicht
     $stateProvider
