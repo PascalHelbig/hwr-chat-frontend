@@ -8,16 +8,22 @@
  * Controller of the hwrChatApp
  */
 
-//ToDo: NOCH FEHLERHAFT
+//ToDo: Weiterleitung Login; Email-Bestätigung; Nur @hwr-berlin.de zulassen
 angular.module('hwrChatApp')
-  .controller('RegisterCtrl', function ($scope, Restangular) {
-    $scope.user = {lastname :"", firstName : "", password : "", confirmPw : "", email: ""};
+  .controller('RegisterCtrl', function ($scope, $mdToast, Restangular) {
+    $scope.user = {lastname :"", firstname : "", password : "", email: ""};
+    $scope.confirm = {password: ""};
     $scope.signUP = function () {
-      Restangular.all('accounts').post($scope.user).then(function (user) {
-        $mdToast.showSimple('Registrierung erfolgreich');
-        $state.go('login');
-      }, function () {
-        $mdToast.showSimple('Fehler!');
-      });
+      if($scope.confirm.password == $scope.user.password && $scope.confirm.agree) {
+        Restangular.all('accounts').post($scope.user).then(function () {
+          $mdToast.showSimple('Registrierung erfolgreich');
+        }, function () {
+          $mdToast.showSimple('Fehler!');
+        })
+      }
+      else {
+        if(!$scope.confirm.agree) {$mdToast.showSimple('Nutzungsbestimmungen akzeptieren!');}
+        else{$mdToast.showSimple('Passwort ungleich!');}
+      }
     }
   });
