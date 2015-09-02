@@ -8,13 +8,13 @@
  * Controller of the hwrChatApp
  */
 angular.module('hwrChatApp')
-  .controller('ForgotPasswordCtrl', function ($scope) {
+  .controller('ForgotPasswordCtrl', function ($scope, $state, $mdToast, Restangular) {
     $scope.user = {email: ""};
-
-    /**
-     * Funktion kann nicht geprüft werden da aktuell keine Email vom Backend aus gesendet werden kann
-     */
     $scope.sendResetPasswordMail = function () {
-      httpService('resetPassword', {email: $scope.user.email})
+      Restangular.all('accounts').customPOST($scope.user, 'reset').then(function () {
+        $mdToast.showSimple('E-Mail zur Wiederherstellung gesendet!');
+      }, function() {
+        $mdToast.showSimple('Fehler! E-Mail Adresse nicht gefunden.');
+      });
     };
   });
