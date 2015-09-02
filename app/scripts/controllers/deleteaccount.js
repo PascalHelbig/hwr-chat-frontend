@@ -11,7 +11,7 @@ angular.module('hwrChatApp')
   .controller('DeleteaccountCtrl', function ($scope, userService, httpService, localStorageService, $mdToast, $state, authService) {
     var userID = localStorageService.get('hwr-app-id');
 
-    $scope.deleteAccount = {pw: ""};
+    $scope.deleteAccount = {pw: ''};
 
     userService.then(function (data) {
       $scope.user = data.response;
@@ -25,8 +25,8 @@ angular.module('hwrChatApp')
     $scope.confirmDeleteAccount = function () {
       console.log($scope.user.email);
       console.log($scope.deleteAccount.pw);
-      if ($scope.deleteAccount.pw == "1234") {
-        httpService("deleteUser", {
+      if ($scope.deleteAccount.pw === '1234') {
+        httpService('deleteUser', {
           userID: userID,
           email: $scope.user.email,
           pw: $scope.deleteAccount.pw

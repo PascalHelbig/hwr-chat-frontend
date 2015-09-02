@@ -8,7 +8,7 @@
  * Controller of the hwrChatApp
  */
 angular.module('hwrChatApp')
-  .controller('SettingsCtrl', function ($scope,userService, chatBuildRefactorService, httpService, $state) {
+  .controller('SettingsCtrl', function ($scope, userService, chatBuildRefactorService) {
 
       userService.then(function (data) {
         $scope.user = data.response;
@@ -21,7 +21,7 @@ angular.module('hwrChatApp')
      */
     $scope.gotoConfirm = function () {
       console.log($scope.user);
-      chatBuildRefactorService.setChangeUserData($scope.user)
+      chatBuildRefactorService.setChangeUserData($scope.user);
     };
 
     //$scope.gotoConfirm = function () {

@@ -11,7 +11,7 @@ angular.module('hwrChatApp')
   .controller('NewChatCtrl', function ($scope, screenService, $mdSidenav, contactService, localStorageService, httpService, $stateParams, chatBuildRefactorService, $mdToast, $state) {
     $scope.isMobile = screenService.isMobileView();
     var userID = localStorageService.get('hwr-app-id');
-    $scope.selectedUser = {id : ""}
+    $scope.selectedUser = {id : ''};
     $scope.openSideNav = function () {
       $mdSidenav('left').toggle();
     };
@@ -22,14 +22,13 @@ angular.module('hwrChatApp')
     $scope.resetGroupIDs = function(){
       chatBuildRefactorService.setArrayNull();
     };
-    $scope.setUserID = function(userID_Partner){
-      $scope.selectedUser.id = userID_Partner;
+    $scope.setUserId = function(userIdPartner){
+      $scope.selectedUser.id = userIdPartner;
       console.log($scope.selectedUser.id);
     };
 
     $scope.newChat = function () {
       var chatID = null;
-      var emptyQuery = null;
       console.log($scope.selectedUser.id);
       console.log(userID);
 
@@ -51,7 +50,7 @@ angular.module('hwrChatApp')
                 httpService('sendeNachricht', {
                   userID: userID,
                   unterhaltung: chatID,
-                  inhalt: "... hat den Chat angelegt."
+                  inhalt: '... hat den Chat angelegt.'
                 }).then(function(){
                   $mdToast.showSimple('Chatanlegen erfolgreich');
                   $state.go('layout_2screens.contacts');

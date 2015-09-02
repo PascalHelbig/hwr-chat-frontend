@@ -10,8 +10,8 @@
 angular.module('hwrChatApp')
   .controller('RenamechatCtrl', function ($scope, chatBuildRefactorService, httpService, localStorageService, $state) {
     var userID = localStorageService.get('hwr-app-id');
-    $scope.user = {chatName: ""};
-    var parameterArray = new Array();
+    $scope.user = {chatName: ''};
+    var parameterArray = [];
 
     /**
      * Nachgehaltenen Daten aus Chat per chatBuildRefactosService.getChatNameAndId bereitstellen

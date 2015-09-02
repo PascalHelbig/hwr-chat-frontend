@@ -17,7 +17,6 @@ angular.module('hwrChatApp')
         $scope.contacts = data.response;
         console.log($scope.contacts);
       });
-    $interval(callAtInterval, 300000);
     function callAtInterval() {
       httpService('getNachrichtenSender', {userID: $scope.userID})
         .then(function (data) {
@@ -25,11 +24,12 @@ angular.module('hwrChatApp')
           console.log($scope.contacts);
         });
     }
+    $interval(callAtInterval, 300000);
 
     $scope.isMobile = screenService.isMobileView();
 
     $scope.openSideNav = function() {
-      $mdSidenav('left').toggle()
+      $mdSidenav('left').toggle();
     };
 
     /**
@@ -37,12 +37,12 @@ angular.module('hwrChatApp')
      */
     $scope.setChatName = function(data){
       var chatName = data;
-      chatBuildRefactorService.setChatName(chatName)
+      chatBuildRefactorService.setChatName(chatName);
     };
 
 
     $scope.logout = function() {
       authService.logout();
-    }
+    };
 
   });

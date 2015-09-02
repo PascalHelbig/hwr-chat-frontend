@@ -10,9 +10,9 @@
 angular.module('hwrChatApp')
   .factory('chatBuildRefactorService', function () {
     var chatBuildRefactorService = {};
-    var contactArray = new Array();
-    var userDataArray = new Array();
-    var parameterArray = new Array();
+    var contactArray = [];
+    var userDataArray = [];
+    var parameterArray = [];
 
     var unique = function (origArr) {
       var newArr = [],
@@ -28,7 +28,9 @@ angular.module('hwrChatApp')
             break;
           }
         }
-        if (!found) newArr.push(origArr[x]);
+        if (!found) {
+          newArr.push(origArr[x]);
+        }
       }
       return newArr;
     };
@@ -41,7 +43,7 @@ angular.module('hwrChatApp')
       var contactString = contactArray[0];
       for (var index = 1; index < contactArray.length; ++index)
       {
-        contactString += "," + contactArray[index];
+        contactString += ',' + contactArray[index];
       }
       return contactString;
     };
@@ -53,10 +55,11 @@ angular.module('hwrChatApp')
       var contactString = userDataArray[0];
       for (var index = 1; index < userDataArray.length; ++index)
       {
-        if(index% 2 == 0)
-        contactString += ";" + userDataArray[index];
-        else
-          contactString += " " + userDataArray[index];
+        if(index% 2 === 0) {
+          contactString += ';' + userDataArray[index];
+        } else {
+          contactString += ' ' + userDataArray[index];
+        }
       }
       return contactString;
     };
@@ -124,7 +127,7 @@ angular.module('hwrChatApp')
      * Nachgehaltene Userdaten für confirm.html
      */
     chatBuildRefactorService.getChangeUserData = function(){
-      console.log(userData)
+      console.log(userData);
       return userData;
     };
 

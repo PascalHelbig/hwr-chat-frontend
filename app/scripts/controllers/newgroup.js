@@ -11,7 +11,7 @@ angular.module('hwrChatApp')
   .controller('NewGroupCtrl', function ($scope, screenService, $mdSidenav, contactService, chatBuildRefactorService) {
 
     $scope.isMobile = screenService.isMobileView();
-    $scope.selectedUser = {name : ""};
+    $scope.selectedUser = {name : ''};
 
     $scope.openSideNav = function () {
       $mdSidenav('left').toggle();

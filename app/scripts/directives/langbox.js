@@ -11,7 +11,7 @@ angular.module('hwrChatApp')
     return {
       templateUrl: 'views/directives/langbox.html',
       restrict: 'E',
-      link: function postLink(scope, element, attrs) {
+      link: function postLink(scope) {
         // aktuelle Sprache:
         scope.languageSelect = $translate.use();
         scope.languages = [
@@ -21,9 +21,9 @@ angular.module('hwrChatApp')
 
         scope.changeLang = function (key) {
           $translate.use(key).then(function (key) {
-            console.log("Sprache zu " + key + " gewechselt.");
-          }, function (key) {
-            console.log("Irgendwas lief schief.");
+            console.log('Sprache zu ' + key + ' gewechselt.');
+          }, function () {
+            console.log('Irgendwas lief schief.');
           });
         };
 

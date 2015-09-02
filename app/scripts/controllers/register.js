@@ -11,19 +11,19 @@
 //ToDo: Weiterleitung Login; Email-Bestätigung; Nur @hwr-berlin.de zulassen
 angular.module('hwrChatApp')
   .controller('RegisterCtrl', function ($scope, $mdToast, Restangular) {
-    $scope.user = {lastname :"", firstname : "", password : "", email: ""};
-    $scope.confirm = {password: ""};
+    $scope.user = {lastname: '', firstname: '', password: '', email: ''};
+    $scope.confirm = {password: ''};
     $scope.signUP = function () {
-      if($scope.confirm.password == $scope.user.password && $scope.confirm.agree) {
+      if($scope.confirm.password === $scope.user.password && $scope.confirm.agree) {
         Restangular.all('accounts').post($scope.user).then(function () {
           $mdToast.showSimple('Registrierung erfolgreich');
         }, function () {
           $mdToast.showSimple('Fehler!');
-        })
+        });
       }
       else {
         if(!$scope.confirm.agree) {$mdToast.showSimple('Nutzungsbestimmungen akzeptieren!');}
         else{$mdToast.showSimple('Passwort ungleich!');}
       }
-    }
+    };
   });

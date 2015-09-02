@@ -10,7 +10,7 @@
 angular.module('hwrChatApp')
   .controller('ConfirmCtrl', function ($scope, chatBuildRefactorService, httpService, $mdToast, $state) {
 
-    $scope.deleteAccount = {pw: ""};
+    $scope.deleteAccount = {pw: ''};
 
 
     /**
@@ -22,26 +22,26 @@ angular.module('hwrChatApp')
      */
     $scope.confirm = function () {
       var changedData = null;
-      if ($scope.deleteAccount.pw == "1234"){
+      if ($scope.deleteAccount.pw === '1234'){
       changedData = chatBuildRefactorService.getChangeUserData();
         console.log(changedData);
       }
 
-      if ($scope.deleteAccount.pw == "1234") {
-        httpService("edit", {
-          what: "nachname",
+      if ($scope.deleteAccount.pw === '1234') {
+        httpService('edit', {
+          what: 'nachname',
           new: changedData.nachname
         });
-        httpService("edit", {
-          what: "vorname",
+        httpService('edit', {
+          what: 'vorname',
           new: changedData.vorname
         });
-        httpService("edit", {
-          what: "telefon",
+        httpService('edit', {
+          what: 'telefon',
           new: changedData.telefon
         });
-        httpService("edit", {
-          what: "verhaeltnis",
+        httpService('edit', {
+          what: 'verhaeltnis',
           new: changedData.verhaeltnis
         }).then(function(){
           $mdToast.showSimple('Änderungen erfolgreich');
@@ -54,6 +54,6 @@ angular.module('hwrChatApp')
       else{
         $mdToast.showSimple('Passwort falsch!');
       }
-    }
+    };
   });
 

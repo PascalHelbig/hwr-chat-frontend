@@ -8,6 +8,6 @@
  * Controller of the hwrChatApp
  */
 angular.module('hwrChatApp')
-  .controller('InfoCtrl', function ($scope) {
+  .controller('InfoCtrl', function () {
 
   });

@@ -9,7 +9,7 @@
  */
 angular.module('hwrChatApp')
   .controller('ForgotPasswordCtrl', function ($scope, $state, $mdToast, Restangular) {
-    $scope.user = {email: ""};
+    $scope.user = {email: ''};
     $scope.sendResetPasswordMail = function () {
       Restangular.all('accounts').customPOST($scope.user, 'reset').then(function () {
         $mdToast.showSimple('E-Mail zur Wiederherstellung gesendet!');
