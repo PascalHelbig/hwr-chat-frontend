@@ -13,6 +13,7 @@ angular.module('hwrChatApp')
     $scope.sendResetPasswordMail = function () {
       Restangular.all('accounts').customPOST($scope.user, 'reset').then(function () {
         $mdToast.showSimple('E-Mail zur Wiederherstellung gesendet!');
+        $state.go('layout_small.login');
       }, function() {
         $mdToast.showSimple('Fehler! E-Mail Adresse nicht gefunden.');
       });
