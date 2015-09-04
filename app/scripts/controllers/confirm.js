@@ -23,7 +23,7 @@ angular.module('hwrChatApp')
     $scope.confirm = function () {
       $scope.user = {email: userService.email, password: $scope.deleteAccount.pw};
       Restangular.all('accounts').customPOST($scope.user, 'login').then(function () {
-        Restangular.all('accounts').customPUT(userService.id, chatBuildRefactorService.getChangeUserData).then(function (user) {
+        Restangular.all('accounts').put(userService.id, chatBuildRefactorService.getChangeUserData).then(function (user) {
           $scope.user = user;
           console.log($scope.user);
           $mdToast.showSimple('Änderung erfolgreich');
