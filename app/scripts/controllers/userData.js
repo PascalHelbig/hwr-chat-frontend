@@ -11,13 +11,11 @@
  * Controller of the hwrChatApp
  */
 angular.module('hwrChatApp')
-  .controller('UserDataCtrl', function ($scope,userService) {
-    userService.then(function(data) {
-      //wird so eigentlich nicht benötigt, habe die funktionen jetzt in settings.js gelegt....ich glaube ich hatte diesen controller damals per hand angelegt(?) könnte eigentlich gelöscht werden
-        $scope.user = data.response;
-        console.log($scope.user);
-      });
-
+  .controller('UserDataCtrl', function ($scope,userService, Restangular) {
+    Restangular.all('accounts').get(userService.id).then(function (user) {
+      $scope.user = user;
+      console.log($scope.user);
+    });
   });
 
 
