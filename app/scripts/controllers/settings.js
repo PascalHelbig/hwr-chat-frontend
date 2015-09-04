@@ -8,19 +8,31 @@
  * Controller of the hwrChatApp
  */
 angular.module('hwrChatApp')
-  .controller('SettingsCtrl', function ($scope, userService, chatBuildRefactorService, Restangular) {
-    Restangular.all('accounts').get(userService.id).then(function (user) {
-        $scope.user = user;
-        console.log($scope.user);
+  .controller('SettingsCtrl', function ($scope, userService, Restangular) {
+    function loadAccount() {
+      Restangular.one('accounts', userService.id).get().then(function (account) {
+        $scope.user = account;
       });
+    }
 
-    //ToDo: Benutzerdaten ändern mit Restangular.
-    /**
-     * Nachhalten der Userdaten per chatBuildRefactorService.setChangeUserData
-     * für die Backendabfrage in confirm.html
-     */
-    $scope.gotoConfirm = function () {
-      console.log($scope.user);
-      chatBuildRefactorService.setChangeUserData($scope.user);
+    $scope.confirmPw = false;
+    loadAccount();
+
+    $scope.save = function () {
+      if ($scope.confirmPw === true) {
+        // ToDo: passwordConfirm im Backend kontrollieren.
+        $scope.user.put().then(function () {
+          // Update erfolgreich:
+          $scope.user.passwordConfirm = '';
+          $scope.confirmPw = false;
+        }, function() {
+          // $scope.user reseten:
+          loadAccount();
+          $scope.confirmPw = false;
+        });
+      } else {
+        $scope.confirmPw = true;
+      }
     };
+
   });
