@@ -32,8 +32,8 @@ angular.module('hwrChatApp')
           pw: $scope.deleteAccount.pw
         }).then(function(){
           authService.logout();
-          $mdToast.showSimple('Accountlöschen erfolgreich');
-          $state.go('layout_2screens.login');
+          $mdToast.showSimple('Account erfolgreich gelöscht!');
+          $state.go('layout_small.login');
         }, function () {
           $mdToast.showSimple('Fehler!');
         });

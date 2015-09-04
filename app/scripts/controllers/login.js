@@ -13,7 +13,7 @@ angular.module('hwrChatApp')
 
     $scope.login = function () {
       Restangular.all('accounts').customPOST($scope.user, 'login').then(function (user) {
-        userService.login(user);
+        userService.login(user, $scope.user.email);
         $mdToast.showSimple('Login erfolgreich');
         $state.go('layout_2screens.contacts');
       }, function() {

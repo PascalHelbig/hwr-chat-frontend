@@ -12,12 +12,15 @@ angular.module('hwrChatApp')
     var userService = {};
     userService.token = null;
     userService.id = null;
+    userService.email = null;
 
-    userService.login = function (user) {
+    userService.login = function (user, email) {
       userService.token = user.id;
       userService.id = user.userId;
+      userService.email = email;
       localStorage.setItem('token', userService.token);
       localStorage.setItem('id', userService.id);
+      localStorage.setItem('email', userService.email);
       userService.setHeader();
     };
 
@@ -34,6 +37,7 @@ angular.module('hwrChatApp')
     function loadFromLocalStorage() {
       userService.id = localStorage.getItem('id');
       userService.token = localStorage.getItem('token');
+      userService.email = localStorage.getItem('email');
     }
 
     return userService;
