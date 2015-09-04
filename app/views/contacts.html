@@ -20,14 +20,14 @@
 
   <div flex-item="6" class="mt++">
     <div class="divider divider--dark"></div>
-    <ul class="list mt++" ng-repeat="contact in contacts">
-      <button class="btn btn--m btn--blue btn--flat" lx-ripple ng-click="setChatName(contact.unterhaltungsName)">
-      <li class="list-row list-row--has-separator" ui-sref="layout_2screens.chat({id: contact.unterhaltungsID})">
+    <ul class="list mt++" ng-repeat="chat in chats">
+      <button class="btn btn--m btn--blue btn--flat" lx-ripple>
+      <li class="list-row list-row--has-separator" ui-sref="layout_2screens.chat({id: chat.id})">
         <div class="list-row__primary">
           <img src="/images/yeoman.png" width="40" height="40" class="img-round">
         </div>
         <div class="list-row__content">
-          <span class="display-block">{{contact.unterhaltungsName}}</span>
+          <span class="display-block">{{chat.name}}</span>
           <span class="display-block fs-body-1 tc-black-2">{{contact.timestamp}}</span>
         </div>
       </li>
