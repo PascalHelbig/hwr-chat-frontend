@@ -13,14 +13,29 @@ angular.module('hwrChatApp')
     userService.token = null;
     userService.id = null;
     userService.email = null;
+    userService.firstname = null;
+    userService.lastname = null;
+    userService.phone = null;
+    userService.course = null;
 
-    userService.login = function (user, email) {
-      userService.token = user.id;
-      userService.id = user.userId;
-      userService.email = email;
+    userService.login = function (loginresponse) {
+      userService.token = loginresponse.id;
+      userService.id = loginresponse.userId;
+      Restangular.all('accounts').get(loginresponse.userId).then(function (user) {
+        userService.email = user.email;
+        userService.firstname = user.firstname;
+        userService.lastname = user.lastname;
+        userService.phone = user.phone;
+        userService.course = user.courseId;
+        console.log(user);
+      });
       localStorage.setItem('token', userService.token);
       localStorage.setItem('id', userService.id);
       localStorage.setItem('email', userService.email);
+      localStorage.setItem('firstname', userService.firstname);
+      localStorage.setItem('lastname', userService.lastname);
+      localStorage.setItem('phone', userService.phone);
+      localStorage.setItem('course', userService.course);
       userService.setHeader();
     };
 
@@ -38,6 +53,10 @@ angular.module('hwrChatApp')
       userService.id = localStorage.getItem('id');
       userService.token = localStorage.getItem('token');
       userService.email = localStorage.getItem('email');
+      userService.firstname = localStorage.getItem('firstname');
+      userService.lastname = localStorage.getItem('lastname');
+      userService.phone = localStorage.getItem('phone');
+      userService.course = localStorage.getItem('course');
     }
 
     return userService;

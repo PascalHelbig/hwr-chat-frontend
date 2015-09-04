@@ -12,8 +12,8 @@ angular.module('hwrChatApp')
     $scope.user = {email: 'test@hwr-berlin.de', password: '1234'};
 
     $scope.login = function () {
-      Restangular.all('accounts').customPOST($scope.user, 'login').then(function (user) {
-        userService.login(user, $scope.user.email);
+      Restangular.all('accounts').customPOST($scope.user, 'login').then(function (loginresponse) {
+        userService.login(loginresponse);
         $mdToast.showSimple('Login erfolgreich');
         $state.go('layout_2screens.contacts');
       }, function() {

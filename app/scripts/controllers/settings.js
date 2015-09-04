@@ -9,10 +9,8 @@
  */
 angular.module('hwrChatApp')
   .controller('SettingsCtrl', function ($scope, userService, chatBuildRefactorService, Restangular) {
-    Restangular.all('accounts').get(userService.id).then(function (user) {
-        $scope.user = user;
-        console.log($scope.user);
-      });
+    $scope.user = userService;
+    console.log($scope.user);
 
     //ToDo: Benutzerdaten ändern mit Restangular.
     /**
