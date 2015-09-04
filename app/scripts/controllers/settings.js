@@ -14,7 +14,7 @@ angular.module('hwrChatApp')
         console.log($scope.user);
       });
 
-    //ToDo: Benutzerdaten ändern mit Restangular. Zusammen mit confirm.js
+    //ToDo: Benutzerdaten ändern mit Restangular.
     /**
      * Nachhalten der Userdaten per chatBuildRefactorService.setChangeUserData
      * für die Backendabfrage in confirm.html
