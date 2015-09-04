@@ -12,13 +12,23 @@ angular.module('hwrChatApp')
     $scope.user = userService;
     console.log($scope.user);
 
-    //ToDo: Benutzerdaten ändern mit Restangular.
-    /**
-     * Nachhalten der Userdaten per chatBuildRefactorService.setChangeUserData
-     * für die Backendabfrage in confirm.html
-     */
-    $scope.gotoConfirm = function () {
-      console.log($scope.user);
-      chatBuildRefactorService.setChangeUserData($scope.user);
+    $scope.confirmPw = false;
+    loadAccount();
+
+    $scope.save = function () {
+      if ($scope.confirmPw === true) {
+        // ToDo: passwordConfirm im Backend kontrollieren.
+        $scope.user.put().then(function () {
+          // Update erfolgreich:
+          $scope.user.passwordConfirm = '';
+          $scope.confirmPw = false;
+        }, function() {
+          // $scope.user reseten:
+          loadAccount();
+          $scope.confirmPw = false;
+        });
+      } else {
+        $scope.confirmPw = true;
+      }
     };
   });

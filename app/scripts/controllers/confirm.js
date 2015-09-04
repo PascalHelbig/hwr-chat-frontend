@@ -27,7 +27,7 @@ angular.module('hwrChatApp')
           $scope.user = user;
           console.log($scope.user);
           $mdToast.showSimple('Änderung erfolgreich');
-        })
+        });
       }, function() {
         $mdToast.showSimple('Fehler!');
       });
