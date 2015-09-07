@@ -5,20 +5,20 @@
       {{'Settings' | translate}}
     </md-button>
     <span flex></span>
-    <md-button layout="row" layout-align="start center" ui-sref="layout_small.confirm" ng-click="gotoConfirm()">
+    <md-button layout="row" layout-align="start center" ng-click="save()">
       <i class="mdi mdi-check"></i>
     </md-button>
   </div>
 </md-toolbar>
 
-<md-content>
+<md-content ng-if="!confirmPw">
   <md-input-container>
     <label >{{'Name' | translate}}</label>
-    <input type="text" ng-model="user.nachname">
+    <input type="text" ng-model="user.lastname">
   </md-input-container>
   <md-input-container>
     <label>{{'FirstName' | translate}}</label>
-    <input type="text" ng-model="user.vorname">
+    <input type="text" ng-model="user.firstname">
   </md-input-container>
   <md-input-container>
     <label>{{'Email' | translate}}</label>
@@ -26,11 +26,11 @@
   </md-input-container>
   <md-input-container>
     <label>{{'Relation' | translate}}</label>
-    <input type="text" ng-model="user.verhaeltnis">
+    <input type="text" ng-model="user.course">
   </md-input-container>
   <md-input-container>
     <label>{{'Phone' | translate}}</label>
-    <input type="text" ng-model="user.telefon">
+    <input type="text" ng-model="user.phone">
   </md-input-container>
   <md-input-container>
   <md-button layout="row" layout-align="center center" ui-sref="layout_small.changepw">
@@ -41,5 +41,12 @@
     <md-button layout="row" layout-align="center center" ui-sref="layout_small.deleteaccount">
       {{'DeleteAcc' | translate}}
     </md-button>
+  </md-input-container>
+</md-content>
+
+<md-content ng-if="confirmPw">
+  <md-input-container>
+    <label>{{'PW' | translate}}</label>
+    <input type="password" ng-model="user.passwordConfirm">
   </md-input-container>
 </md-content>

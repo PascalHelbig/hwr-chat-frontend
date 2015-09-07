@@ -8,38 +8,27 @@
  * Controller of the hwrChatApp
  */
 angular.module('hwrChatApp')
-  .controller('SettingsCtrl', function ($scope, userService, chatBuildRefactorService) {
+  .controller('SettingsCtrl', function ($scope, userService, chatBuildRefactorService, Restangular) {
+    $scope.user = userService;
+    console.log($scope.user);
 
-      userService.then(function (data) {
-        $scope.user = data.response;
-        console.log($scope.user);
-      });
+    $scope.confirmPw = false;
+    loadAccount();
 
-    /**
-     * Nachhalten der Userdaten per chatBuildRefactorService.setChangeUserData
-     * für die Backendabfrage in confirm.html
-     */
-    $scope.gotoConfirm = function () {
-      console.log($scope.user);
-      chatBuildRefactorService.setChangeUserData($scope.user);
+    $scope.save = function () {
+      if ($scope.confirmPw === true) {
+        // ToDo: passwordConfirm im Backend kontrollieren.
+        $scope.user.put().then(function () {
+          // Update erfolgreich:
+          $scope.user.passwordConfirm = '';
+          $scope.confirmPw = false;
+        }, function() {
+          // $scope.user reseten:
+          loadAccount();
+          $scope.confirmPw = false;
+        });
+      } else {
+        $scope.confirmPw = true;
+      }
     };
-
-    //$scope.gotoConfirm = function () {
-    //  httpService("edit", {
-    //    what:"nachname",
-    //    new: $scope.user.nachname
-    //  });
-    //  httpService("edit", {
-    //    what:"vorname",
-    //    new: $scope.user.vorname
-    //  });
-    //  httpService("edit", {
-    //    what:"telefon",
-    //    new: $scope.user.telefon
-    //  });
-    //  httpService("edit", {
-    //    what:"verhaeltnis",
-    //    new: $scope.user.verhaeltnis
-    //  })
-    //}
   });

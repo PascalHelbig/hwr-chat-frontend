@@ -8,7 +8,7 @@
  * Controller of the hwrChatApp
  */
 angular.module('hwrChatApp')
-  .controller('ConfirmCtrl', function ($scope, chatBuildRefactorService, httpService, $mdToast, $state) {
+  .controller('ConfirmCtrl', function ($scope, chatBuildRefactorService, userService, $mdToast, $state, Restangular) {
 
     $scope.deleteAccount = {pw: ''};
 
@@ -21,39 +21,16 @@ angular.module('hwrChatApp')
      * Leider mit dem bestehenden backend nicht anders möglich
      */
     $scope.confirm = function () {
-      var changedData = null;
-      if ($scope.deleteAccount.pw === '1234'){
-      changedData = chatBuildRefactorService.getChangeUserData();
-        console.log(changedData);
-      }
-
-      if ($scope.deleteAccount.pw === '1234') {
-        httpService('edit', {
-          what: 'nachname',
-          new: changedData.nachname
+      $scope.user = {email: userService.email, password: $scope.deleteAccount.pw};
+      Restangular.all('accounts').customPOST($scope.user, 'login').then(function () {
+        Restangular.all('accounts').put(userService.id, chatBuildRefactorService.getChangeUserData).then(function (user) {
+          $scope.user = user;
+          console.log($scope.user);
+          $mdToast.showSimple('Änderung erfolgreich');
         });
-        httpService('edit', {
-          what: 'vorname',
-          new: changedData.vorname
-        });
-        httpService('edit', {
-          what: 'telefon',
-          new: changedData.telefon
-        });
-        httpService('edit', {
-          what: 'verhaeltnis',
-          new: changedData.verhaeltnis
-        }).then(function(){
-          $mdToast.showSimple('Änderungen erfolgreich');
-          $state.go('layout_small.settings');
-        }, function () {
-          $mdToast.showSimple('Fehler!');
-          $state.go('layout_small.settings');
-        });
-      }
-      else{
-        $mdToast.showSimple('Passwort falsch!');
-      }
+      }, function() {
+        $mdToast.showSimple('Fehler!');
+      });
     };
   });
 

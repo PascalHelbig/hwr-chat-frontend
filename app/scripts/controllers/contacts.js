@@ -8,23 +8,15 @@
  * Controller of the hwrChatApp
  */
 angular.module('hwrChatApp')
-  .controller('ContactsCtrl', function ($scope, screenService, $mdSidenav, chatBuildRefactorService, $mdDialog, httpService, $state, localStorageService, authService, $interval) {
-    $scope.userID = localStorageService.get('hwr-app-id');
-
-
-    httpService('getNachrichtenSender', {userID: $scope.userID})
-      .then(function (data) {
-        $scope.contacts = data.response;
-        console.log($scope.contacts);
+  .controller('ContactsCtrl', function ($scope, screenService, $mdSidenav, $interval, Restangular, userService) {
+    $scope.chats = [];
+    function getChats() {
+      Restangular.one('accounts', userService.id).all('chats').getList().then(function (chats) {
+        $scope.chats = chats;
       });
-    function callAtInterval() {
-      httpService('getNachrichtenSender', {userID: $scope.userID})
-        .then(function (data) {
-          $scope.contacts = data.response;
-          console.log($scope.contacts);
-        });
     }
-    $interval(callAtInterval, 300000);
+    getChats();
+    $interval(getChats, 5000);
 
     $scope.isMobile = screenService.isMobileView();
 
@@ -32,17 +24,7 @@ angular.module('hwrChatApp')
       $mdSidenav('left').toggle();
     };
 
-    /**
-     * Chatnamen nachhalten per chatBuildRefactorService.setChatName für chat.html
-     */
-    $scope.setChatName = function(data){
-      var chatName = data;
-      chatBuildRefactorService.setChatName(chatName);
-    };
-
-
     $scope.logout = function() {
-      authService.logout();
+      userService.logout();
     };
-
   });
