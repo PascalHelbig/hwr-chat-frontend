@@ -25,6 +25,6 @@ angular.module('hwrChatApp')
     };
 
     $scope.logout = function() {
-      //ToDo: logout umsetzen
+      userService.logout();
     };
   });

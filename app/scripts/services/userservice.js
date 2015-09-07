@@ -39,6 +39,14 @@ angular.module('hwrChatApp')
       userService.setHeader();
     };
 
+    userService.logout = function() {
+      localStorage.removeItem('id');
+      localStorage.removeItem('token');
+      userService.id = null;
+      userService.token = null;
+      Restangular.setDefaultHeaders();
+    };
+
     userService.setHeader = function () {
       if (userService.token === null) {
         loadFromLocalStorage();
