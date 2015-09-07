@@ -8,7 +8,7 @@
  * Controller of the hwrChatApp
  */
 angular.module('hwrChatApp')
-  .controller('ContactsCtrl', function ($scope, screenService, $mdSidenav, $interval, $mdToast, Restangular, userService) {
+  .controller('ContactsCtrl', function ($scope, screenService, $mdSidenav, $interval, Restangular, userService) {
     $scope.chats = [];
     function getChats() {
       Restangular.one('accounts', userService.id).all('chats').getList().then(function (chats) {
@@ -25,11 +25,6 @@ angular.module('hwrChatApp')
     };
 
     $scope.logout = function() {
-      Restangular.all('accounts').customPOST(userService, 'logout').then(function (logoutresponse) {
-        $mdToast.showSimple('Logout erfolgreich');
-        $state.go('layout_small.login');
-      }, function() {
-        $mdToast.showSimple('Fehler!');
-      });S
+      userService.logout();
     };
   });
