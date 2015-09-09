@@ -8,7 +8,7 @@
  * Controller of the hwrChatApp
  */
 angular.module('hwrChatApp')
-  .controller('LoginCtrl', function ($scope, $translate, authService, $mdToast, $state, Restangular, userService) {
+  .controller('LoginCtrl', function ($scope, $translate, $mdToast, $state, Restangular, userService) {
     $scope.user = {email: 'test@hwr-berlin.de', password: '1234'};
 
     $scope.login = function () {

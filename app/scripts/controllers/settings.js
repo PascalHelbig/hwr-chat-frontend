@@ -13,7 +13,7 @@ angular.module('hwrChatApp')
     console.log($scope.user);
 
     $scope.confirmPw = false;
-    loadAccount();
+    //loadAccount();
 
     $scope.save = function () {
       if ($scope.confirmPw === true) {
