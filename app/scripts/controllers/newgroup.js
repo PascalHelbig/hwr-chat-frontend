@@ -26,9 +26,7 @@ angular.module('hwrChatApp')
       $scope.selectedUser = {name : chatBuildRefactorService.getContactArraySelectedUser()};
     };
 
-    contactService.then(function (data) {
-      $scope.contacts = data.response;
-      console.log($scope.contacts);
-    });
+    $scope.contacts = contactService;
+    console.log($scope.contacts);
 
   });

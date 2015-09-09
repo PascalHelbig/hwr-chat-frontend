@@ -8,7 +8,7 @@
  * Controller of the hwrChatApp
  */
 angular.module('hwrChatApp')
-  .controller('SettingsCtrl', function ($scope, userService, chatBuildRefactorService, Restangular) {
+  .controller('SettingsCtrl', function ($scope, userService) {
     $scope.user = userService;
     console.log($scope.user);
 
@@ -24,7 +24,7 @@ angular.module('hwrChatApp')
           $scope.confirmPw = false;
         }, function() {
           // $scope.user reseten:
-          loadAccount();
+          //loadAccount();
           $scope.confirmPw = false;
         });
       } else {

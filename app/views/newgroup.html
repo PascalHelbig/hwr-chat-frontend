@@ -20,12 +20,14 @@
   </md-input-container>
 </md-content>
 
-<md-list layout="column" layout-align="center center">
+<md-list>
   <div ng-repeat="contact in contacts | filter:query">
-    <md-list-item ng-click="addContactToGroup(contact)">
-        <div class="md-list-item-text compact" >
-          <h4>{{contact.vorname +" "+ contact.nachname}}</h4>
+    <md-list-item>
+      <md-button  style="width:100%" ng-click="addContactToGroup(contact)">
+        <div class="md-list-item-text">
+          <h4>{{contact.firstname +" "+ contact.lastname}}</h4>
         </div>
+      </md-button>
     </md-list-item>
     <md-divider></md-divider>
   </div>

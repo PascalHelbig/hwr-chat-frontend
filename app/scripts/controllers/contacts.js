@@ -16,7 +16,7 @@ angular.module('hwrChatApp')
       });
     }
     getChats();
-    $interval(getChats, 5000);
+    $interval(getChats, 5000000);
 
     $scope.isMobile = screenService.isMobileView();
 

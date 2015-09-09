@@ -8,12 +8,9 @@
  * Factory in the hwrChatApp.
  */
 angular.module('hwrChatApp')
-  .factory('contactService', function (httpService, localStorageService, Restangular) {
-    var userID = localStorageService.get('hwr-app-id');
+  .factory('contactService', function (Restangular) {
 
-   // return Restangular.all('accounts').get();
-
-    return httpService('loadAllContacts', {userID: userID});
+   return Restangular.all('accounts').getList().$object;
 
   });
 
