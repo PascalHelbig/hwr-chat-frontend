@@ -8,7 +8,7 @@
  * Controller of the hwrChatApp
  */
 angular.module('hwrChatApp')
-  .controller('NewChatCtrl', function ($scope, screenService, $mdSidenav,Restangular, contactService, localStorageService, $stateParams, chatBuildRefactorService, $mdToast, $state) {
+  .controller('NewChatCtrl', function ($scope, screenService, $mdSidenav,Restangular, contactService, localStorageService, $stateParams, chatBuildRefactorService) {
     $scope.isMobile = screenService.isMobileView();
 
     $scope.selectedUser = {id : ''};
