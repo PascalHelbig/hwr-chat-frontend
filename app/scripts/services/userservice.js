@@ -8,64 +8,72 @@
  * Factory in the hwrChatApp.
  */
 angular.module('hwrChatApp')
-  .factory('userService', function (Restangular) {
-    var userService = {};
-    userService.token = null;
-    userService.id = null;
-    userService.email = null;
-    userService.firstname = null;
-    userService.lastname = null;
-    userService.phone = null;
-    userService.course = null;
-
-    userService.login = function (loginresponse) {
-      userService.token = loginresponse.id;
-      userService.id = loginresponse.userId;
-      Restangular.all('accounts').get(loginresponse.userId).then(function (user) {
-        userService.email = user.email;
-        userService.firstname = user.firstname;
-        userService.lastname = user.lastname;
-        userService.phone = user.phone;
-        userService.course = user.courseId;
-        console.log(user);
-      });
-      localStorage.setItem('token', userService.token);
-      localStorage.setItem('id', userService.id);
-      localStorage.setItem('email', userService.email);
-      localStorage.setItem('firstname', userService.firstname);
-      localStorage.setItem('lastname', userService.lastname);
-      localStorage.setItem('phone', userService.phone);
-      localStorage.setItem('course', userService.course);
-      userService.setHeader();
+  .factory('userService', function (Restangular, $q) {
+    var userService = {
+      token: null,
+      id: null,
+      data: {}
     };
 
-    userService.logout = function() {
-      localStorage.removeItem('id');
-      localStorage.removeItem('token');
-      userService.id = null;
-      userService.token = null;
-      Restangular.setDefaultHeaders();
+    userService.loadData = function () {
+      var defer = $q.defer();
+      var id = localStorage.getItem('id');
+      if (id === null) {
+        defer.reject();
+      } else {
+        Restangular.one('accounts', id).get().then(function (user) {
+          userService.data = user;
+          defer.resolve();
+        });
+      }
+      return defer.promise;
+    };
+
+    userService.login = function (credentials) {
+      var defer = $q.defer();
+      Restangular.all('accounts').customPOST(credentials, 'login').then(function (loginResponse) {
+        userService.token = loginResponse.id;
+        localStorage.setItem('token', userService.token);
+        localStorage.setItem('id', loginResponse.userId);
+        userService.setHeader();
+        userService.loadData().then(function () {
+          defer.resolve();
+        }, function () {
+          defer.reject();
+        });
+      }, function () {
+        defer.reject();
+      });
+      return defer.promise;
+    };
+
+    userService.me = function () {
+      if (angular.equals(userService.data, {})) {
+        userService.loadData().then(function () {
+          console.log('geladen');
+          return userService.data;
+        }, function () {
+          return;
+        });
+      } else {
+        return userService.data;
+      }
     };
 
     userService.setHeader = function () {
       if (userService.token === null) {
-        loadFromLocalStorage();
-        if (userService.token === null) {
-          return;
-        }
+        userService.token = localStorage.getItem('token');
       }
       Restangular.setDefaultHeaders({Authorization: userService.token});
     };
 
-    function loadFromLocalStorage() {
-      userService.id = localStorage.getItem('id');
-      userService.token = localStorage.getItem('token');
-      userService.email = localStorage.getItem('email');
-      userService.firstname = localStorage.getItem('firstname');
-      userService.lastname = localStorage.getItem('lastname');
-      userService.phone = localStorage.getItem('phone');
-      userService.course = localStorage.getItem('course');
-    }
-
+    userService.logout = function () {
+      localStorage.removeItem('token');
+      localStorage.removeItem('id');
+      userService.token = null;
+      userService.id = null;
+      userService.data = {};
+      Restangular.setDefaultHeaders();
+    };
     return userService;
   });

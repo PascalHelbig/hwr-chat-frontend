@@ -8,15 +8,16 @@
  * Controller of the hwrChatApp
  */
 angular.module('hwrChatApp')
-  .controller('ContactsCtrl', function ($scope, screenService, $mdSidenav, $interval, Restangular, userService) {
+  .controller('ContactsCtrl', function ($scope, screenService, $mdSidenav, $interval, userService) {
+    $scope.user = userService.me();
     $scope.chats = [];
     function getChats() {
-      Restangular.one('accounts', userService.id).all('chats').getList().then(function (chats) {
+      userService.me().getList('chats').then(function (chats) {
         $scope.chats = chats;
       });
     }
     getChats();
-    $interval(getChats, 5000000);
+    $interval(getChats, 5000);
 
     $scope.isMobile = screenService.isMobileView();
 

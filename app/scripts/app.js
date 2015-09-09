@@ -203,6 +203,7 @@ angular
 
   .run(function ($rootScope, $window, screenService, $mdDialog, scrollableConfig, userService) {
     userService.setHeader();
+    userService.loadData();
     scrollableConfig.template = '<div class="{nanoClass}" ><div class="{contentClass}" scroll-glue ng-transclude></div></div>';
     var dialogOpen = false;
 

@@ -9,7 +9,7 @@
  */
 angular.module('hwrChatApp')
   .controller('SettingsCtrl', function ($scope, userService) {
-    $scope.user = userService;
+    $scope.user = userService.me();
     console.log($scope.user);
 
     $scope.confirmPw = false;
