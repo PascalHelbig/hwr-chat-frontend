@@ -12,9 +12,7 @@ angular.module('hwrChatApp')
     $scope.user = userService.me();
     $scope.chats = [];
     function getChats() {
-      userService.me().getList('chats').then(function (chats) {
-        $scope.chats = chats;
-      });
+      $scope.chats = userService.me().getList('chats').$object;
     }
     getChats();
     $interval(getChats, 5000);
