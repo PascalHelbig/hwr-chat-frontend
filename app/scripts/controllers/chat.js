@@ -63,11 +63,11 @@ angular.module('hwrChatApp')
           $scope.chat.save().then(function () {
             $mdDialog.hide($scope.chat);
           }, function () {
-            $mdDialog.cancel();
+            $mdDialog.cancel({err: true});
           });
         };
         $scope.cancel = function () {
-          $mdDialog.hide();
+          $mdDialog.cancel();
         };
       }
 
@@ -77,11 +77,11 @@ angular.module('hwrChatApp')
         locals: {chat: $scope.chat},
         clickOutsideToClose: true
       }).then(function (chat) {
-        if (angular.isObject(chat)) {
-          $scope.chat = chat;
+        $scope.chat = chat;
+      }, function (response) {
+        if(response.err === true) {
+          $mdToast.showSimple('Fehler beim umbennen');
         }
-      }, function () {
-        $mdToast.showSimple('Fehler beim umbennen');
       });
     };
     /**
