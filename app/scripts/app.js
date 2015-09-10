@@ -81,15 +81,6 @@ angular
           }
         }
       })
-      .state('layout_small.groupname', {
-        url: '/groupname',
-        views: {
-          content: {
-            templateUrl: 'views/groupname.html',
-            controller: 'GroupnameCtrl'
-          }
-        }
-      })
       .state('layout_2screens.contacts', {
         url: '/chat',
         views: {

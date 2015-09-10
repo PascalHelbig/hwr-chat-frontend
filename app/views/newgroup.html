@@ -5,30 +5,30 @@
       {{'NewGroup' | translate}}
     </md-button>
     <span flex></span>
-    <md-button layout="row" layout-align="start center" ui-sref="layout_small.groupname">
+    <md-button layout="row" layout-align="start center" ng-click="submit()">
       <i class="mdi mdi-check"></i>
     </md-button>
   </div>
 </md-toolbar>
-<md-content>
-<label  layout="row" layout-align="center center" >{{selectedUser.name}}</label>
-</md-content>
-<md-content>
-  <md-input-container>
-    <label>{{'Search' | translate}}</label>
-    <input type="text" ng-model="query">
-  </md-input-container>
-</md-content>
 
-<md-list>
-  <div ng-repeat="contact in contacts | filter:query">
-    <md-list-item>
-      <md-button  style="width:100%" ng-click="addContactToGroup(contact)">
-        <div class="md-list-item-text">
-          <h4>{{contact.firstname +" "+ contact.lastname}}</h4>
-        </div>
-      </md-button>
-    </md-list-item>
-    <md-divider></md-divider>
-  </div>
-</md-list>
+<md-input-container>
+  <label>Gruppenname</label>
+  <input type="text" ng-model="name" required>
+</md-input-container>
+
+<md-chips ng-model="selectedAccounts" md-autocomplete-snap md-require-match="true">
+  <md-autocomplete
+    md-selected-item="ctrl.selectedItem"
+    md-search-text="searchText"
+    md-items="item in loadAccounts(searchText)"
+    md-no-cache="true"
+    md-item-text="item.firstname"
+    placeholder="Nutzer suchen...">
+    <span md-highlight-text="ctrl.searchText">{{item.firstname}} {{item.lastname}}</span>
+  </md-autocomplete>
+  <md-chip-template>
+        <span>
+          {{$chip.firstname}} {{$chip.lastname}}
+        </span>
+  </md-chip-template>
+</md-chips>
