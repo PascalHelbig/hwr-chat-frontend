@@ -8,75 +8,59 @@
  * Controller of the hwrChatApp
  */
 angular.module('hwrChatApp')
-  .controller('ChatCtrl', function ($scope, screenService, $stateParams, httpService, localStorageService, $mdDialog, $mdToast, $state, chatBuildRefactorService, $interval) {
-    $scope.userID = localStorageService.get('hwr-app-id');
-    /**
-     * Nachgehaltenen Chatnamen aus contacts.html per chatBuildRefactorService.getChatName bereitstellen
-     */
-    var chatName = chatBuildRefactorService.getChatName();
-    $scope.getName = {name: chatName};
-
-
+  .controller('ChatCtrl', function ($scope, screenService, $stateParams, $mdDialog, $mdToast, $state, $interval, Restangular, userService) {
+    var lastMessageId = 0;
+    $scope.messages = [];
     $scope.isMobile = screenService.isMobileView();
 
+    Restangular.one('chats', $stateParams.id).get().then(function(chat) {
+      $scope.chat = chat;
+      $scope.chat.getList('messages').then(function (messages) {
+        $scope.messages = messages;
+        lastMessageId = $scope.messages[$scope.messages.length-1].id;
+        $interval(loadMessages, 5000);
+      });
+    });
 
-
-    $scope.emojiToMessage = function(data){
-      $scope.messageText += data;
-    };
 
     /**
-     *Senden der Nachricht aus dem Nachrichtenfeld an Backend
+     * Nachrichten werden per Polling geladen
+     * dazu wird $interval genutzt
+     */
+    function loadMessages() {
+      $scope.chat.getList('messages', {filter: {where: {id: {gt: lastMessageId}}}}).then(function (messages) {
+        for (var i = 0; i < messages.length; i++) {
+          $scope.messages.push(messages[i]);
+        }
+        lastMessageId = $scope.messages[$scope.messages.length-1].id;
+      });
+    }
+
+    /**
+     * Senden der Nachricht aus dem Nachrichtenfeld an Backend
      * und visualisieren in Chat
      */
     $scope.send = function() {
       if($scope.messageText === '') {
-        return null;
+        return;
       }
-      httpService('sendeNachricht', {
-        userID: $scope.userID,
-        unterhaltung: $stateParams.id,
-        inhalt: $scope.messageText});
-
-      $scope.chat.push({
-        inhalt: $scope.messageText,
-        senderID: $scope.userID,
-        timestamp: new Date()
+      $scope.messages.post({
+        content: $scope.messageText,
+        accountId: userService.me().id
+      }).then(function() {
+        // Wenn die Nachricht erfolgreich gesendet, dann lade sofort die Nachrichten nach:
+        loadMessages();
+      }, function() {
+        $mdToast.showSimple('Nachricht konnte nicht gesendet werden.');
       });
       $scope.messageText = '';
     };
 
-    /**
-     *Initiale Abfrage zu neuen Nachrichten, danach werden sie per Intervall neu geladen
-     * leider bietet Backend keine andere Möglichkeit(wie zb websockets)
-     */
-    httpService('getNachrichtenAusUnterhaltung', {userID: $scope.userID, unterhaltung: $stateParams.id})
-      .then(function (response) {
-        $scope.chat = response.response;
-        angular.forEach($scope.chat, function (value) {
-          value.timestamp = new Date(value.timestamp);
-        });
-      });
 
-    /**
-     * Nachrichten werden per Polling geladen
-     * dazu wird ng interval genutzt
-     * ist aktuell auf einen sehr hohen Wert gesetzt, da es sonst beim Debugen stört
-     */
-    function callAtInterval() {
-      httpService('getNachrichtenAusUnterhaltung', {userID: $scope.userID, unterhaltung: $stateParams.id})
-        .then(function (response) {
-          $scope.chat = response.response;
-          angular.forEach($scope.chat, function (value) {
-            value.timestamp = new Date(value.timestamp);
-          });
-        });
-    }
-    $interval(callAtInterval, 300000000);
     /**
      *Chat verlassen und wenn erfolgreich navigation zu contacts view
      */
-    $scope.leaveChat = function() {
+    /*$scope.leaveChat = function() {
       httpService('sendeNachricht', {
         userID: $scope.userID,
         unterhaltung: $stateParams.id,
@@ -91,8 +75,9 @@ angular.module('hwrChatApp')
     /**
      *Nachhalten der id für die RenameChat View und deren Controller
      */
-    $scope.renameChat = function(){
+    /*$scope.renameChat = function(){
       chatBuildRefactorService.addChatNameAndId($stateParams.id);
     };
+     */
   });
 
