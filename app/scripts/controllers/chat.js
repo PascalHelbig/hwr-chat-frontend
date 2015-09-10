@@ -84,21 +84,20 @@ angular.module('hwrChatApp')
         $mdToast.showSimple('Fehler beim umbennen');
       });
     };
-
     /**
      *Chat verlassen und wenn erfolgreich navigation zu contacts view
      */
-    /*$scope.leaveChat = function() {
-      httpService('sendeNachricht', {
-        userID: $scope.userID,
-        unterhaltung: $stateParams.id,
-        inhalt: $scope.userID + ' hat den Chat verlassen.'
-      }).then(httpService('leaveUnterhaltung', {userID: $scope.userID, unterhaltung: $stateParams.id}).then(function () {
-        $mdToast.showSimple('Erfolgreich Chat verlassen!');
+    $scope.leaveChat = function () {
+      console.log(userService.me().id);
+      //Restangular.one('Chats', $scope.chat.id).remove('Accounts', userService.me().id);
+
+      userService.me().one('chats/rel', $scope.chat.id).remove().then(function () {
+        $scope.chat.all('messages').post({content: userService.me().firstname + ' hat den Chat verlassen.'});
+        $mdToast.showSimple('Chat verlassen');
         $state.go('layout_2screens.contacts');
       }, function () {
-        $mdToast.showSimple('Fehler!');
-      }));
-     };*/
+        $mdToast.showSimple('Chat nicht verlassen');
+      });
+    };
   });
 
