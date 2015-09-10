@@ -1,19 +1,20 @@
 <md-toolbar class="md-primary md-whiteframe-z3"">
   <div class="md-toolbar-tools">
-    <md-button layout="row" layout-align="start center" ui-sref="layout_2screens.contacts">
+    <md-button layout="row" layout-align="start center" ng-click="cancel()">
       <i class="mdi mdi-arrow-left"></i>
       {{'RenamedChatName' | translate}}
     </md-button>
     <span flex></span>
-    <md-button ng-click="submitRenameChat()">
+    <md-button ng-click="rename()">
       <i class="mdi mdi-check"></i>
     </md-button>
   </div>
 </md-toolbar>
-
-<md-content>
-  <md-input-container>
-    <label>{{'RenamedChatName' | translate}}</label>
-    <input type="text" ng-model="user.chatName">
-  </md-input-container>
-</md-content>
+<form ng-submit="rename()">
+  <md-content>
+    <md-input-container>
+      <label>{{'RenamedChatName' | translate}}</label>
+      <input type="text" ng-model="chat.name">
+    </md-input-container>
+  </md-content>
+</form>

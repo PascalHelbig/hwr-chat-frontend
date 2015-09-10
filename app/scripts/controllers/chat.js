@@ -13,11 +13,11 @@ angular.module('hwrChatApp')
     $scope.messages = [];
     $scope.isMobile = screenService.isMobileView();
 
-    Restangular.one('chats', $stateParams.id).get().then(function(chat) {
+    Restangular.one('chats', $stateParams.id).get().then(function (chat) {
       $scope.chat = chat;
       $scope.chat.getList('messages').then(function (messages) {
         $scope.messages = messages;
-        lastMessageId = $scope.messages[$scope.messages.length-1].id;
+        lastMessageId = $scope.messages[$scope.messages.length - 1].id;
         $interval(loadMessages, 5000);
       });
     });
@@ -32,7 +32,7 @@ angular.module('hwrChatApp')
         for (var i = 0; i < messages.length; i++) {
           $scope.messages.push(messages[i]);
         }
-        lastMessageId = $scope.messages[$scope.messages.length-1].id;
+        lastMessageId = $scope.messages[$scope.messages.length - 1].id;
       });
     }
 
@@ -40,22 +40,50 @@ angular.module('hwrChatApp')
      * Senden der Nachricht aus dem Nachrichtenfeld an Backend
      * und visualisieren in Chat
      */
-    $scope.send = function() {
-      if($scope.messageText === '') {
+    $scope.send = function () {
+      if ($scope.messageText === '') {
         return;
       }
       $scope.messages.post({
         content: $scope.messageText,
         accountId: userService.me().id
-      }).then(function() {
+      }).then(function () {
         // Wenn die Nachricht erfolgreich gesendet, dann lade sofort die Nachrichten nach:
         loadMessages();
-      }, function() {
+      }, function () {
         $mdToast.showSimple('Nachricht konnte nicht gesendet werden.');
       });
       $scope.messageText = '';
     };
 
+    $scope.renameChat = function () {
+      function RenameChatCtrl($scope, chat, $mdDialog, Restangular) {
+        $scope.chat = Restangular.copy(chat);
+        $scope.rename = function () {
+          $scope.chat.save().then(function () {
+            $mdDialog.hide($scope.chat);
+          }, function () {
+            $mdDialog.cancel();
+          });
+        };
+        $scope.cancel = function () {
+          $mdDialog.hide();
+        };
+      }
+
+      $mdDialog.show({
+        controller: RenameChatCtrl,
+        templateUrl: 'views/renamechat.html',
+        locals: {chat: $scope.chat},
+        clickOutsideToClose: true
+      }).then(function (chat) {
+        if (angular.isObject(chat)) {
+          $scope.chat = chat;
+        }
+      }, function () {
+        $mdToast.showSimple('Fehler beim umbennen');
+      });
+    };
 
     /**
      *Chat verlassen und wenn erfolgreich navigation zu contacts view
@@ -71,13 +99,6 @@ angular.module('hwrChatApp')
       }, function () {
         $mdToast.showSimple('Fehler!');
       }));
-    };
-    /**
-     *Nachhalten der id für die RenameChat View und deren Controller
-     */
-    /*$scope.renameChat = function(){
-      chatBuildRefactorService.addChatNameAndId($stateParams.id);
-    };
-     */
+     };*/
   });
 
