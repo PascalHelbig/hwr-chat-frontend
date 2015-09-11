@@ -8,7 +8,7 @@
  * Controller of the hwrChatApp
  */
 angular.module('hwrChatApp')
-  .controller('NewChatCtrl', function ($scope, screenService, $mdSidenav,Restangular, contactService, localStorageService, $stateParams, chatBuildRefactorService) {
+  .controller('NewChatCtrl', function ($scope, screenService, $mdSidenav,Restangular, localStorageService, $stateParams, chatBuildRefactorService) {
     $scope.isMobile = screenService.isMobileView();
 
     $scope.selectedUser = {id : ''};
@@ -31,6 +31,6 @@ angular.module('hwrChatApp')
 
     };
 
-      $scope.contacts = contactService;
+      $scope.contacts = Restangular.all('accounts').getList().$object;
       console.log($scope.contacts);
   });

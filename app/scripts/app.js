@@ -124,8 +124,7 @@ angular
         url: '/info',
         views: {
           content: {
-            templateUrl: 'views/info.html',
-            controller: 'InfoCtrl'
+            templateUrl: 'views/info.html'
           }
         }
       })
