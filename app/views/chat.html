@@ -22,7 +22,7 @@
   </div>
 </md-toolbar>
 
-<div style="position:absolute; top:64px; bottom:76px;" ng-style="{'width' : (isMobile ? '100%' : '66%')}" scrollable>
+<div style="position:absolute; top:64px; bottom:130px" ng-style="{'width' : (isMobile ? '100%' : '66%')}" scrollable>
   <div ng-repeat="message in messages" layout="row" layout-align="center end">
     <div flex flex-order="{{message.senderID==userID ? '1': '3'}}" style="padding:20px;"
          ng-style="{'text-align': (message.senderID==userID ? 'right' : 'left')}">
@@ -34,10 +34,10 @@
     </md-content>
   </div>
 
-  <md-content>
+<!--  <md-content>
     <h3>Emojis</h3>
     <div ng-bind-html="emoji | emoticons:{'linkTarget':'_blank','newLine':true}" class="ng-emoticons" ng-click="emojiToMessage(emoji)"></div>
-  </md-content>
+  </md-content>-->
 
 </div>
 
@@ -58,7 +58,7 @@
             Kamera
           </md-button>
         </div>
-        <div flex="50">
+        <div flex="45">
           <md-button class="md-raised md-warn">
             Emos
           </md-button>
