@@ -46,13 +46,29 @@
             flex="100" class="md-whiteframe-z3">
   <form ng-submit="send()">
     <md-content>
+      <div layout="row" layout-wrap>
+        <div flex="100">
           <md-input-container>
             <label>{{'Message' | translate}}</label>
             <textarea ng-model="messageText"></textarea>
           </md-input-container>
-          <md-button class="md-primary md-fab md-fab-bottom-right" aria-label="FAB">
+        </div>
+        <div flex="30">
+          <md-button class="md-raised md-warn">
+            Kamera
+          </md-button>
+        </div>
+        <div flex="50">
+          <md-button class="md-raised md-warn">
+            Emos
+          </md-button>
+        </div>
+        <div flex="20">
+          <md-button class="md-raised md-warn">
             <i class="mdi mdi-send"></i>
           </md-button>
+        </div>
+      </div>
     </md-content>
   </form>
 </div>
