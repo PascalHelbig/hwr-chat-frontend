@@ -1,40 +1,15 @@
-<!-- md-dialog für test mit Dialogbox per klick auf Button in contact screen-->
 <md-dialog>
 
-
-<md-toolbar class="md-primary md-whiteframe-z3"">
-  <div class="md-toolbar-tools">
-    <md-button layout="row" layout-align="start center" ui-sref="layout_2screens.contacts">
-      <i class="mdi mdi-arrow-left"></i>
-      {{'NewChat' | translate}}
-    </md-button>
-    <span flex></span>
-  </div>
-</md-toolbar>
-
-<md-content>
-  <md-input-container>
-    <md-button layout="row" layout-align="center center" ui-sref="layout_small.newgroup">
-      {{'NewGroup' | translate}}
-    </md-button>
-  </md-input-container>
-  <md-input-container>
-    <label >{{'Search' | translate}}</label>
-    <input type="text">
-  </md-input-container>
-</md-content>
-
-<md-list>
-  <div ng-repeat="contact in contacts">
-    <md-list-item>
-      <md-button ui-sref="layout_2screens.chat({id: contact.id})" style="width:100%">
-        <div class="md-list-item-text">
-          <h3>{{contact.name}}</h3>
-        </div>
+  <md-dialog-content>
+    <form ng-submit="createChat()">
+      <md-input-container>
+        <label>Gruppenname</label>
+        <input type="text" ng-model="name" required>
+      </md-input-container>
+      <md-button class="md-actions">abbrechen</md-button>
+      <md-button class="md-actions md-primary" ng-disabled="name==null" ng-click="createChat()">
+        Chat erstellen
       </md-button>
-    </md-list-item>
-    <md-divider></md-divider>
-  </div>
-</md-list>
-  <!-- md-dialog für test mit Dialogbox per klick auf Button in contact screen-->
-  </md-dialog>
+    </form>
+  </md-dialog-content>
+</md-dialog>
