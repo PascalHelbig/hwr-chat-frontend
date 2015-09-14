@@ -5,18 +5,19 @@
       {{'NewChat' | translate}}
     </md-button>
     <span flex></span>
-    <md-button ng-click="newChat()">
+    <md-button ng-click="createChat()">
       <i class="mdi mdi-check"></i>
     </md-button>
   </div>
 </md-toolbar>
 
 <md-content>
-  <md-input-container layout="row" layout-align="center center">
-    <md-button ui-sref="layout_small.newgroup" ng-click="resetGroupIDs()">
-      <i class="mdi icon--l mdi-account-multiple-plus"></i>{{'NewGroup' | translate}}
-    </md-button>
-  </md-input-container>
+  <md-chips>
+    <md-chip ng-repeat="account in selectedAccounts" ng-click="removeUser(account)" style="cursor: pointer">
+      <span>{{account.firstname}} {{account.lastname}}</span>
+    </md-chip>
+  </md-chips>
+
   <md-input-container>
     <label >{{'Search' | translate}}</label>
     <input type="text" ng-model="query">
@@ -25,9 +26,9 @@
 
 
 <md-list>
-  <div ng-repeat="contact in contacts | filter:query">
+  <div ng-repeat="contact in contacts | filter:query | filter:filterAlreadyAdded | orderBy:['firstname', 'lastname']">
     <md-list-item>
-      <md-button  style="width:100%" ng-click="setUserId(contact.id)">
+      <md-button style="width:100%" ng-click="addUser(contact)">
         <div class="md-list-item-text">
           <h4>{{contact.firstname +" "+ contact.lastname}}</h4>
         </div>

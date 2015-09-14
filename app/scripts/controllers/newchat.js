@@ -8,29 +8,40 @@
  * Controller of the hwrChatApp
  */
 angular.module('hwrChatApp')
-  .controller('NewChatCtrl', function ($scope, screenService, $mdSidenav,Restangular, localStorageService, $stateParams, chatBuildRefactorService) {
+  .controller('NewChatCtrl', function ($scope, screenService, $mdSidenav, Restangular, $mdToast) {
     $scope.isMobile = screenService.isMobileView();
-
-    $scope.selectedUser = {id : ''};
     $scope.openSideNav = function () {
       $mdSidenav('left').toggle();
     };
 
-    /**
-     * Alte Nachgehaltene userIDs für Gruppenchat löschen
-     */
-    $scope.resetGroupIDs = function(){
-      chatBuildRefactorService.setArrayNull();
-    };
-    $scope.setUserId = function(userIdPartner){
-      $scope.selectedUser.id = userIdPartner;
-      console.log($scope.selectedUser.id);
+    $scope.contacts = Restangular.all('accounts').getList().$object;
+    $scope.selectedAccounts = [];
+
+    $scope.addUser = function (account) {
+      $scope.selectedAccounts.push(account);
     };
 
-    $scope.newChat = function () {
-
+    $scope.removeUser = function (account) {
+      var index = $scope.selectedAccounts.indexOf(account);
+      $scope.selectedAccounts.splice(index, 1);
     };
 
-      $scope.contacts = Restangular.all('accounts').getList().$object;
-      console.log($scope.contacts);
+    $scope.createChat = function () {
+      var length = $scope.selectedAccounts.length;
+      switch(length) {
+        case 0:
+          $mdToast.showSimple('kein User ausgewählt');
+          break;
+        case 1:
+          $mdToast.showSimple('einfachen Chat erstellen');
+          break;
+        default:
+          $mdToast.showSimple('GruppenChat erstellen');
+          break;
+      }
+    };
+
+    $scope.filterAlreadyAdded = function (account) {
+      return ($scope.selectedAccounts.indexOf(account) < 0);
+    };
   });
