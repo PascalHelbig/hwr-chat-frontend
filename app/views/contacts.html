@@ -19,35 +19,38 @@
 <md-content style="position:absolute; top:64px; bottom:0" ng-style="{'width' : (isMobile ? '100%' : '33%')}" scrollable>
 
   <div flex-item="6" class="mt++">
-    <div class="divider divider--dark"></div>
+    <div class="divider divider&#45;&#45;dark"></div>
     <ul class="list mt++" ng-repeat="chat in chats">
-      <button class="btn btn--m btn--blue btn--flat" lx-ripple>
-      <li class="list-row list-row--has-separator" ui-sref="layout_2screens.chat({id: chat.id})">
+      <button class="btn btn&#45;&#45;m btn&#45;&#45;blue btn&#45;&#45;flat" lx-ripple>
+      <li class="list-row list-row&#45;&#45;has-separator" ui-sref="layout_2screens.chat({id: chat.id})">
         <div class="list-row__primary">
           <img src="/images/yeoman.png" width="40" height="40" class="img-round">
         </div>
         <div class="list-row__content">
           <span class="display-block">{{chat.name}}</span>
-          <span class="display-block fs-body-1 tc-black-2">{{contact.timestamp}}</span>
+          <span class="display-block fs-body-1 tc-black-2">{{chat.timestamp}}</span>
         </div>
       </li>
       </button>
-      <div class="divider divider--dark"></div>
+      <div class="divider divider&#45;&#45;dark"></div>
     </ul>
   </div>
 </md-content>
 
-<!--Versuch alles ng-material umzustellen aber die ui-sref weiterleitung geht nicht..
-<md-content style="position:absolute; top:64px; bottom:0" ng-style="{'width' : (isMobile ? '100%' : '33%')}" scrollable>
+
+<!--<md-content >
   <md-list>
-    <md-list-item class="md-2-line" ng-repeat="contact in contacts" ng-click="setChatName(contact.unterhaltungsName)" ui-sref="layout_2screens.chat({id: contact.unterhaltungsID})">
+    <md-list-item class="md-2-line" ng-repeat="chat in chats">
+      <md-button style="width: 100%">
       <img src="/images/yeoman.png" width="40" height="40" class="img-round">
       <div class="md-list-item-text">
-        <h3>{{contact.unterhaltungsName}}</h3>
-        <p>{{contact.timestamp}}</p>
+        <h3>{{chat.name}}</h3>
+        <p>{{chat.timestamp}}</p>
       </div>
+      </md-button>
       <md-divider></md-divider>
     </md-list-item>
+
   </md-list>
 </md-content>-->
 
