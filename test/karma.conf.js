@@ -1,7 +1,7 @@
 // Karma configuration
 // http://karma-runner.github.io/0.12/config/configuration-file.html
-// Generated on 2015-03-10 using
-// generator-karma 0.9.0
+// Generated on 2015-09-15 using
+// generator-karma 1.0.0
 
 module.exports = function (config) {
   'use strict';
@@ -14,7 +14,10 @@ module.exports = function (config) {
     basePath: '../',
 
     // testing framework to use (jasmine/mocha/qunit/...)
-    frameworks: ['jasmine'],
+    // as well as any additional frameworks (requirejs/chai/sinon/...)
+    frameworks: [
+      "jasmine"
+    ],
 
     // list of files / patterns to load in the browser
     files: [
@@ -45,48 +48,15 @@ module.exports = function (config) {
       'bower_components/restangular/dist/restangular.js',
       'bower_components/angular-mocks/angular-mocks.js',
       // endbower
-      'app/scripts/**/*.js',
-      'test/mock/**/*.js',
-      'test/spec/**/*.js'
+      "app/scripts/**/*.js",
+      "test/mock/**/*.js",
+      "test/spec/**/*.js"
     ],
 
     // list of files / patterns to exclude
     exclude: [],
 
-    // coverage reporter generates the coverage
-    reporters: ['progress', 'coverage', 'html', 'junit'],
-
-    preprocessors: {
-      // source files, that you wanna generate coverage for
-      // do not include tests or libraries
-      // (these files will be instrumented by Istanbul)
-      'app/scripts/**/*.js': ['coverage']
-    },
-
-    // optionally, configure the reporter
-    coverageReporter: {
-
-      reporters: [
-        {type: 'html'},
-        {type: 'cobertura', subdir: '../../../../../shippable/codecoverage'}
-      ]
-    },
-
-    htmlReporter: {
-      outputDir: 'karma_html', // where to put the reports
-      templatePath: null, // set if you moved jasmine_template.html
-      focusOnFailures: true, // reports show failures on start
-      namedFiles: false, // name files instead of creating sub-directories
-      pageTitle: null, // page title for reports; browser info by default
-      urlFriendlyName: false // simply replaces spaces with _ for files/dirs
-    },
-
-    junitReporter: {
-      outputFile: '../../../../shippable/testresults/test-results.xml',
-      suite: ''
-    },
-
-      // web server port
+    // web server port
     port: 8080,
 
     // Start these browsers, currently available:
@@ -98,16 +68,13 @@ module.exports = function (config) {
     // - PhantomJS
     // - IE (only Windows)
     browsers: [
-      'PhantomJS'
+      "PhantomJS"
     ],
 
     // Which plugins to enable
     plugins: [
-      'karma-phantomjs-launcher',
-      'karma-jasmine',
-      'karma-coverage',
-      'karma-html-reporter',
-      'karma-junit-reporter'
+      "karma-phantomjs-launcher",
+      "karma-jasmine"
     ],
 
     // Continuous Integration mode
@@ -118,7 +85,7 @@ module.exports = function (config) {
 
     // level of logging
     // possible values: LOG_DISABLE || LOG_ERROR || LOG_WARN || LOG_INFO || LOG_DEBUG
-    logLevel: config.LOG_INFO
+    logLevel: config.LOG_INFO,
 
     // Uncomment the following lines if you are using grunt's server to run the tests
     // proxies: {
