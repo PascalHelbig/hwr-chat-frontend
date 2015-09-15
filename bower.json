@@ -22,5 +22,8 @@
     "angular-mocks": "^1.4.1"
   },
   "appPath": "app",
-  "moduleName": "hwrChatApp"
+  "moduleName": "hwrChatApp",
+  "resolutions": {
+    "angular": "^1.4.1"
+  }
 }
