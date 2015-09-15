@@ -8,30 +8,21 @@
  * Controller of the hwrChatApp
  */
 angular.module('hwrChatApp')
-  .controller('DeleteaccountCtrl', function ($scope, userService, httpService, localStorageService, $mdToast, $state, authService) {
-    var userID = localStorageService.get('hwr-app-id');
+  .controller('DeleteaccountCtrl', function ($scope, userService, $mdToast, $state, Restangular) {
 
-    $scope.deleteAccount = {pw: ''};
 
-    userService.then(function (data) {
-      $scope.user = data.response;
-      console.log($scope.user);
-    });
-
+    $scope.user = {pw: ''};
+    $scope.user.email = userService.me().email;
+    console.log(userService.me().email);
     /**
      * Das bestehende Backend liefert keine Möglichkeit das Passwort prüfen zu lassen.
      * Daher wird hier nur auf 1234 geprüft.
      */
     $scope.confirmDeleteAccount = function () {
       console.log($scope.user.email);
-      console.log($scope.deleteAccount.pw);
-      if ($scope.deleteAccount.pw === '1234') {
-        httpService('deleteUser', {
-          userID: userID,
-          email: $scope.user.email,
-          pw: $scope.deleteAccount.pw
-        }).then(function(){
-          authService.logout();
+      console.log($scope.user.pw);
+      if ($scope.user.pw === '1234') {
+        Restangular.one('accounts', userService.me().id).remove().then(function(){
           $mdToast.showSimple('Account erfolgreich gelöscht!');
           $state.go('layout_small.login');
         }, function () {
