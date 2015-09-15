@@ -44,28 +44,29 @@
 
 <div style="position:absolute; bottom: 0; " ng-style="{'width' : (isMobile ? '100%' : '66%')}"
             flex="100" class="md-whiteframe-z3">
-  <form ng-submit="send()">
-    <md-content>
-      <div layout="row" layout-wrap>
-        <div flex="100">
+  <form>
+    <md-content class="md-padding">
+      <div layout="row" layout-wrap >
+        <div flex="100" >
           <md-input-container>
             <label>{{'Message' | translate}}</label>
             <textarea ng-model="messageText"></textarea>
           </md-input-container>
         </div>
-        <div flex="30">
-          <md-button class="md-raised md-warn">
-            Kamera
+        <div layout-align="center left">
+          <md-button class="md-fab md-mini md-warn" ng-disabled="true">
+            <i class="mdi mdi-attachment"></i>
+          </md-button>
+          <md-button class="md-fab md-mini md-warn">
+            <i class="mdi mdi-emoticon-devil"></i>
           </md-button>
         </div>
-        <div flex="45">
-          <md-button class="md-raised md-warn">
-            Emos
-          </md-button>
-        </div>
-        <div flex="20">
-          <md-button class="md-raised md-warn">
-            <i class="mdi mdi-send"></i>
+        <div flex>
+          <!--TODO: Liste mit letzten Emojis-->
+        </div >
+        <div layout-align="center right">
+          <md-button class="md-raised md-warn" ng-click="send()">
+            Senden
           </md-button>
         </div>
       </div>
