@@ -8,7 +8,7 @@
  * Controller of the hwrChatApp
  */
 angular.module('hwrChatApp')
-  .controller('ContactsCtrl', function ($scope, screenService, $mdSidenav, $interval, userService, $state) {
+  .controller('ContactsCtrl', function ($scope, screenService, $mdSidenav, $interval, userService, $state, $mdToast) {
     $scope.user = userService.me();
     $scope.chats = [];
     function getChats() {
@@ -29,5 +29,7 @@ angular.module('hwrChatApp')
 
     $scope.logout = function() {
       userService.logout();
+      $mdToast.showSimple('Ausgeloggt!');
+      $state.go('layout_small.login');
     };
   });
