@@ -75,5 +75,10 @@ angular.module('hwrChatApp')
       userService.data = {};
       Restangular.setDefaultHeaders();
     };
+
+    userService.isLoggedIn = function () {
+      return userService.token !== null;
+    };
+
     return userService;
   });

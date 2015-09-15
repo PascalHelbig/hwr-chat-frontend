@@ -15,4 +15,14 @@ describe('Service: userService', function () {
     expect(!!userService).toBe(true);
   });
 
+  it('isLoggedIn should return false if token is not set', function () {
+    userService.token = null;
+    expect(userService.isLoggedIn()).toBe(false);
+  });
+
+  it('isLoggedIn should return true if token set', function () {
+    userService.token = 'xyz';
+    expect(userService.isLoggedIn()).toBe(true);
+  });
+
 });
