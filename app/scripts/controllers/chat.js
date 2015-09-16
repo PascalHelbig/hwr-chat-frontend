@@ -12,6 +12,7 @@ angular.module('hwrChatApp')
     var lastMessageId = 0;
     $scope.messages = [];
     $scope.isMobile = screenService.isMobileView();
+    $scope.userID = userService.me().id;
 
     Restangular.one('chats', $stateParams.id).get().then(function (chat) {
       $scope.chat = chat;
@@ -99,5 +100,10 @@ angular.module('hwrChatApp')
         $mdToast.showSimple('Chat nicht verlassen');
       });
     };
+
+    $scope.showEmojis = function(){
+      console.log($scope.messages);
+    };
+
   });
 

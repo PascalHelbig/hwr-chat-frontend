@@ -24,13 +24,15 @@
 
 <div style="position:absolute; top:64px; bottom:130px" ng-style="{'width' : (isMobile ? '100%' : '66%')}" scrollable>
   <div ng-repeat="message in messages" layout="row" layout-align="center end">
-    <div flex flex-order="{{message.senderID==userID ? '1': '3'}}" style="padding:20px;"
-         ng-style="{'text-align': (message.senderID==userID ? 'right' : 'left')}">
-      {{message.timestamp | date:'HH:mm'}}
+    <div flex flex-order="{{message.accountId==userID ? '1': '3'}}" style="padding:20px;"
+         ng-style="{'text-align': (message.accountId==userID ? 'right' : 'left')}">
     </div>
     <md-content flex="66" flex-order="2" class="md-whiteframe-z1" style="padding:10px; margin: 10px 10px"
                 ng-attr-id="{{($last ? 'last_message': '')}}">
+      <b><font color= "#FF0000">{{message.accountId}}</font></b>
       <div ng-bind-html="message.content | emoticons" style="word-wrap: break-word;"></div>
+      <md-divider></md-divider>
+      {{message.createdAt | date:'HH:mm'}}
     </md-content>
   </div>
 
@@ -57,7 +59,7 @@
           <md-button class="md-fab md-mini md-warn" ng-disabled="true">
             <i class="mdi mdi-attachment"></i>
           </md-button>
-          <md-button class="md-fab md-mini md-warn">
+          <md-button class="md-fab md-mini md-warn" ng-click="showEmojis()">
             <i class="mdi mdi-emoticon-devil"></i>
           </md-button>
         </div>
