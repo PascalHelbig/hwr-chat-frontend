@@ -29,6 +29,17 @@ angular.module('hwrChatApp')
       return defer.promise;
     };
 
+    userService.isLoaded = function () {
+      return $q(function (resolve, reject) {
+        // Wenn data ist leer, dann Lade daten
+        if (angular.equals(userService.data, {})) {
+          userService.loadData().then(resolve, reject);
+        } else {
+          resolve();
+        }
+      });
+    };
+
     userService.login = function (credentials) {
       var defer = $q.defer();
       Restangular.all('accounts').customPOST(credentials, 'login').then(function (loginResponse) {
@@ -48,16 +59,7 @@ angular.module('hwrChatApp')
     };
 
     userService.me = function () {
-      if (angular.equals(userService.data, {})) {
-        userService.loadData().then(function () {
-          console.log('geladen');
-          return userService.data;
-        }, function () {
-          return;
-        });
-      } else {
-        return userService.data;
-      }
+      return userService.data;
     };
 
     userService.setHeader = function () {

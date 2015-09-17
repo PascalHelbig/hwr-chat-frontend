@@ -12,7 +12,10 @@ angular.module('hwrChatApp')
     var lastMessageId = 0;
     $scope.messages = [];
     $scope.isMobile = screenService.isMobileView();
-    $scope.userID = userService.me().id;
+
+    userService.isLoaded().then(function() {
+      $scope.userID = userService.me().id;
+    });
 
     Restangular.one('chats', $stateParams.id).get().then(function (chat) {
       $scope.chat = chat;
@@ -45,16 +48,18 @@ angular.module('hwrChatApp')
       if ($scope.messageText === '') {
         return;
       }
-      $scope.messages.post({
-        content: $scope.messageText,
-        accountId: userService.me().id
-      }).then(function () {
-        // Wenn die Nachricht erfolgreich gesendet, dann lade sofort die Nachrichten nach:
-        loadMessages();
-      }, function () {
-        $mdToast.showSimple('Nachricht konnte nicht gesendet werden.');
+      userService.isLoaded().then(function() {
+        $scope.messages.post({
+          content: $scope.messageText,
+          accountId: userService.me().id
+        }).then(function () {
+          // Wenn die Nachricht erfolgreich gesendet, dann lade sofort die Nachrichten nach:
+          loadMessages();
+        }, function () {
+          $mdToast.showSimple('Nachricht konnte nicht gesendet werden.');
+        });
+        $scope.messageText = '';
       });
-      $scope.messageText = '';
     };
 
     $scope.renameChat = function () {
@@ -89,15 +94,14 @@ angular.module('hwrChatApp')
      *Chat verlassen und wenn erfolgreich navigation zu contacts view
      */
     $scope.leaveChat = function () {
-      console.log(userService.me().id);
-      //Restangular.one('Chats', $scope.chat.id).remove('Accounts', userService.me().id);
-
-      userService.me().one('chats/rel', $scope.chat.id).remove().then(function () {
-        $scope.chat.all('messages').post({content: userService.me().firstname + ' hat den Chat verlassen.'});
-        $mdToast.showSimple('Chat verlassen');
-        $state.go('layout_2screens.contacts');
-      }, function () {
-        $mdToast.showSimple('Chat nicht verlassen');
+      userService.isLoaded().then(function() {
+        userService.me().one('chats/rel', $scope.chat.id).remove().then(function () {
+          $scope.chat.all('messages').post({content: userService.me().firstname + ' hat den Chat verlassen.'});
+          $mdToast.showSimple('Chat verlassen');
+          $state.go('layout_2screens.contacts');
+        }, function () {
+          $mdToast.showSimple('Chat nicht verlassen');
+        });
       });
     };
 

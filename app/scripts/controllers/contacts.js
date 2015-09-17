@@ -9,13 +9,16 @@
  */
 angular.module('hwrChatApp')
   .controller('ContactsCtrl', function ($scope, screenService, $mdSidenav, $interval, userService, $state, $mdToast) {
-    $scope.user = userService.me();
     $scope.chats = [];
-    function getChats() {
-      $scope.chats = userService.me().getList('chats').$object;
-    }
-    getChats();
-    $interval(getChats, 5000);
+    userService.isLoaded().then(function() {
+      $scope.user = userService.me();
+
+      function getChats() {
+        $scope.chats = userService.me().getList('chats').$object;
+      }
+      getChats();
+      $interval(getChats, 5000);
+    });
 
     $scope.isMobile = screenService.isMobileView();
 
@@ -28,7 +31,9 @@ angular.module('hwrChatApp')
     };
 
     $scope.logout = function() {
-      userService.logout();
+      userService.isLoaded().then(function() {
+        userService.logout();
+      });
       $mdToast.showSimple('Ausgeloggt!');
       $state.go('layout_small.login');
     };
