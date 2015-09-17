@@ -18,6 +18,8 @@ angular.module('hwrChatApp')
       }
       getChats();
       $interval(getChats, 5000);
+    }, function () {
+      $state.go('layout_small.login');
     });
 
     $scope.isMobile = screenService.isMobileView();

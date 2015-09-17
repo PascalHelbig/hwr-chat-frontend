@@ -16,17 +16,17 @@ angular.module('hwrChatApp')
     };
 
     userService.loadData = function () {
-      var defer = $q.defer();
-      var id = localStorage.getItem('id');
-      if (id === null) {
-        defer.reject();
-      } else {
-        Restangular.one('accounts', id).get().then(function (user) {
-          userService.data = user;
-          defer.resolve();
-        });
-      }
-      return defer.promise;
+      return $q(function (resolve, reject) {
+        var id = localStorage.getItem('id');
+        if (id === null) {
+          reject();
+        } else {
+          Restangular.one('accounts', id).get().then(function (user) {
+            userService.data = user;
+            resolve();
+          }, reject);
+        }
+      });
     };
 
     userService.isLoaded = function () {
