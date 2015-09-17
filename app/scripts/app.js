@@ -184,8 +184,8 @@ angular
       suffix: '.json'
     });
     $translateProvider.preferredLanguage('de_DE');
-
     $translateProvider.useLocalStorage();
+    $translateProvider.useSanitizeValueStrategy('sanitizeParameters');
 
     $mdThemingProvider.theme('default')
       .primaryPalette('red');
