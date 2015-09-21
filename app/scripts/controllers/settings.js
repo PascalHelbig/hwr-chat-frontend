@@ -8,27 +8,42 @@
  * Controller of the hwrChatApp
  */
 angular.module('hwrChatApp')
-  .controller('SettingsCtrl', function ($scope, userService) {
+  .controller('SettingsCtrl', function ($scope, userService, $mdToast) {
     $scope.user = userService.me();
     console.log($scope.user);
 
-    $scope.confirmPw = false;
-    //loadAccount();
+    $scope.confirmPwPopup = false;
 
     $scope.save = function () {
-      if ($scope.confirmPw === true) {
-        // ToDo: passwordConfirm im Backend kontrollieren.
-        $scope.user.put().then(function () {
-          // Update erfolgreich:
-          $scope.user.passwordConfirm = '';
-          $scope.confirmPw = false;
-        }, function() {
-          // $scope.user reseten:
-          //loadAccount();
-          $scope.confirmPw = false;
+      if ($scope.confirmPwPopup === true) {
+        userService.validatePassword($scope.user.passwordConfirm).then(function (data) {
+          if (data.result === true) {
+            console.log(data);
+            $scope.user.put().then(function () {
+              // Update erfolgreich:
+              $scope.user.passwordConfirm = '';
+              $scope.confirmPwPopup = false;
+              $mdToast.showSimple('Änderung erfolgreich!');
+            }, function () {
+              // $scope.user reseten:
+              userService.loadData().then(function (user) {
+                $scope.user = user;
+              });
+              $scope.confirmPwPopup = false;
+            });
+          }
+          else {
+            userService.loadData().then(function (user) {
+              $scope.user = user;
+            });
+            $scope.confirmPwPopup = false;
+            $mdToast.showSimple('Passwort falsch!');
+          }
         });
       } else {
-        $scope.confirmPw = true;
+        $scope.confirmPwPopup = true;
       }
     };
-  });
+  }
+)
+;

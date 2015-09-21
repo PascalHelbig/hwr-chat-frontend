@@ -11,7 +11,7 @@
 </div>
 </md-toolbar>
 
-<md-content ng-if="!confirmPw" class="md-padding">
+<md-content ng-if="!confirmPwPopup" class="md-padding">
   <md-input-container>
     <label >{{'Name' | translate}}</label>
     <input type="text" ng-model="user.lastname">
@@ -44,7 +44,7 @@
   </md-input-container>
 </md-content>
 
-<md-content ng-if="confirmPw">
+<md-content ng-if="confirmPwPopup">
   <md-input-container>
     <label>{{'PW' | translate}}</label>
     <input type="password" ng-model="user.passwordConfirm">
