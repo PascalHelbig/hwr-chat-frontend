@@ -47,6 +47,9 @@ angular.module('hwrChatApp')
             $mdDialog.cancel();
           });
         };
+        $scope.closeDialog = function () {
+          $mdDialog.cancel();
+        };
       }
 
       switch(length) {

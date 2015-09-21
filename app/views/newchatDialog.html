@@ -6,10 +6,10 @@
         <label>Gruppenname</label>
         <input type="text" ng-model="name" required>
       </md-input-container>
-      <md-button class="md-actions">abbrechen</md-button>
-      <md-button class="md-actions md-primary" ng-disabled="name==null" ng-click="createChat()">
-        Chat erstellen
-      </md-button>
     </form>
+    <md-button class="md-actions" ng-click="closeDialog()">abbrechen</md-button>
+    <md-button class="md-actions md-primary" ng-disabled="name==null" ng-click="createChat()">
+      Chat erstellen
+    </md-button>
   </md-dialog-content>
 </md-dialog>
