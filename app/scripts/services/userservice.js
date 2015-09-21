@@ -23,7 +23,7 @@ angular.module('hwrChatApp')
         } else {
           Restangular.one('accounts', id).get().then(function (user) {
             userService.data = user;
-            resolve();
+            resolve(user);
           }, reject);
         }
       });
@@ -80,6 +80,10 @@ angular.module('hwrChatApp')
 
     userService.isLoggedIn = function () {
       return userService.token !== null;
+    };
+
+    userService.validatePassword = function (password) {
+      return Restangular.all('accounts').customPOST({id: userService.me().id, password: password}, 'validatePassword');
     };
 
     return userService;
