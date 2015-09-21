@@ -8,30 +8,24 @@
  * Controller of the hwrChatApp
  */
 angular.module('hwrChatApp')
-  .controller('ChangepwCtrl', function ($scope, userService, $mdToast, $state) {
+  .controller('ChangepwCtrl', function ($scope, userService, $mdToast) {
 
     $scope.user = {oldPW: '', newPW: '', confirmNewPW: ''};
-    $scope.user.email = userService.me().email;
 
     $scope.confirm = function () {
-      /**
-       * Das bestehende Backend liefert keine Möglichkeit das Passwort prüfen zu lassen.
-       * Daher wird hier nur auf 1234 geprüft.
-       */
-      console.log($scope.user.oldPW);
-      console.log($scope.user.newPW);
-      console.log($scope.user.confirmNewPW);
-      if ($scope.user.newPW === $scope.user.confirmNewPW && $scope.user.oldPW === '1234') {
-        /*
-        Restangualr Anfrage eifügen
-         .then(function(){
-          $mdToast.showSimple('Passwortänderung erfolgreich');
-          $state.go('layout_2screens.settings');
-        }, function () {
-          $mdToast.showSimple('Fehler!');
-        });
-        */
-        $mdToast.showSimple('TODO!');
-      }
+      userService.validatePassword($scope.user.oldPW).then(function (data) {
+        if (data.result === true && $scope.user.newPW === $scope.user.confirmNewPW) {
+          userService.me().password = $scope.user.newPW;
+          userService.me().put().then(function (data) {
+            console.log(data);
+            $mdToast.showSimple('Passwort erfolgreich geändert!');
+          }, function () {
+            $mdToast.showSimple('Serveranfrage fehlgeschlagen!');
+          });
+        }
+        else {
+          $mdToast.showSimple('Eingabe fehlerhaft!');
+        }
+      });
     };
   });
