@@ -11,7 +11,7 @@
   </div>
 </md-toolbar>
 
-<md-content>
+<md-content class="md-padding">
   <md-chips>
     <md-chip ng-repeat="account in selectedAccounts" ng-click="removeUser(account)" style="cursor: pointer">
       <span>{{account.firstname}} {{account.lastname}}</span>
@@ -25,7 +25,7 @@
 </md-content>
 
 
-<md-list>
+<md-list class="md-padding">
   <div ng-repeat="contact in contacts | filter:query | filter:filterAlreadyAdded | orderBy:['firstname', 'lastname']">
     <md-list-item>
       <md-button style="width:100%" ng-click="addUser(contact)">
