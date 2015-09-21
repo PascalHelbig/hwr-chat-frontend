@@ -31,7 +31,7 @@ angular.module('hwrChatApp')
 
     userService.isLoaded = function () {
       return $q(function (resolve, reject) {
-        // Wenn data ist leer, dann Lade daten
+        // Wenn data leer ists, dann Lade daten
         if (angular.equals(userService.data, {})) {
           userService.loadData().then(resolve, reject);
         } else {

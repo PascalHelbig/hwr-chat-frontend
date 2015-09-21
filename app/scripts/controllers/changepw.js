@@ -22,8 +22,7 @@ angular.module('hwrChatApp')
           }, function () {
             $mdToast.showSimple('Serveranfrage fehlgeschlagen!');
           });
-        }
-        else {
+        } else {
           $mdToast.showSimple('Eingabe fehlerhaft!');
         }
       });
