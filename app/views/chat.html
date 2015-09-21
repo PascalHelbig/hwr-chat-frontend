@@ -22,7 +22,7 @@
   </div>
 </md-toolbar>
 
-<div style="position:absolute; top:64px; bottom:130px" ng-style="{'width' : (isMobile ? '100%' : '66%')}" scrollable>
+<div style="position:absolute; top:64px; bottom:160px" ng-style="{'width' : (isMobile ? '100%' : '66%')}" scrollable>
   <div ng-repeat="message in messages" layout="row" layout-align="center end">
     <div flex flex-order="{{message.accountId==userID ? '1': '3'}}" style="padding:20px;"
          ng-style="{'text-align': (message.accountId==userID ? 'right' : 'left')}">
