@@ -8,7 +8,7 @@
  * Controller of the hwrChatApp
  */
 angular.module('hwrChatApp')
-  .controller('ChangepwCtrl', function ($scope, userService, $mdToast) {
+  .controller('ChangepwCtrl', function ($scope, userService, $mdToast, $filter) {
 
     $scope.user = {oldPW: '', newPW: '', confirmNewPW: ''};
 
@@ -18,12 +18,12 @@ angular.module('hwrChatApp')
           userService.me().password = $scope.user.newPW;
           userService.me().put().then(function (data) {
             console.log(data);
-            $mdToast.showSimple('Passwort erfolgreich geändert!');
+            $mdToast.showSimple($filter('translate')('AlertPwChange'));
           }, function () {
-            $mdToast.showSimple('Serveranfrage fehlgeschlagen!');
+            $mdToast.showSimple($filter('translate')('AlertServerRequest'));
           });
         } else {
-          $mdToast.showSimple('Eingabe fehlerhaft!');
+          $mdToast.showSimple($filter('translate')('AlertInputError'));
         }
       });
     };

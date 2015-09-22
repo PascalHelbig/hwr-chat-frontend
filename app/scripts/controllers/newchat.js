@@ -8,7 +8,7 @@
  * Controller of the hwrChatApp
  */
 angular.module('hwrChatApp')
-  .controller('NewChatCtrl', function ($scope, screenService, $mdSidenav, Restangular, $mdToast, userService, $state, $mdDialog) {
+  .controller('NewChatCtrl', function ($scope, screenService, $mdSidenav, Restangular, $mdToast, $filter, userService, $state, $mdDialog) {
     $scope.isMobile = screenService.isMobileView();
     $scope.openSideNav = function () {
       $mdSidenav('left').toggle();
@@ -54,7 +54,7 @@ angular.module('hwrChatApp')
 
       switch(length) {
         case 0:
-          $mdToast.showSimple('kein User ausgewählt');
+          $mdToast.showSimple($filter('translate')('AlertContactError'));
           break;
         case 1:
           // ToDo: Chats brauchen immer einen Namen. Wie ist das bei einem Chat mit nur zwei Personen. Vlt Backend anpassen.
@@ -62,7 +62,7 @@ angular.module('hwrChatApp')
             Restangular.one('chats', chat.id).one('accounts/rel', $scope.selectedAccounts[0].id).customPUT({});
             $state.go('layout_2screens.chat', {id: chat.id});
           }, function () {
-            $mdToast.showSimple('Netzwerkproblem');
+            $mdToast.showSimple($filter('translate')('AlertNetworkError'));
           });
           break;
         default:
@@ -74,7 +74,7 @@ angular.module('hwrChatApp')
           }).then(function (chat) {
             $state.go('layout_2screens.chat', {id: chat.id});
           }, function() {
-            $mdToast.showSimple('Fehler beim Erstellen des Gruppenchats.');
+            $mdToast.showSimple($filter('translate')('AlertError'));
           });
           break;
       }

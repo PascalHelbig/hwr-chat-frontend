@@ -8,7 +8,7 @@
  * Controller of the hwrChatApp
  */
 angular.module('hwrChatApp')
-  .controller('SettingsCtrl', function ($scope, userService, $mdToast) {
+  .controller('SettingsCtrl', function ($scope, userService, $mdToast, $filter) {
     $scope.user = userService.me();
     console.log($scope.user);
 
@@ -23,7 +23,7 @@ angular.module('hwrChatApp')
               // Update erfolgreich:
               $scope.user.passwordConfirm = '';
               $scope.confirmPwPopup = false;
-              $mdToast.showSimple('Änderung erfolgreich!');
+              $mdToast.showSimple($filter('translate')('AlertChange'));
             }, function () {
               // $scope.user reseten:
               userService.loadData().then(function (user) {
@@ -37,7 +37,7 @@ angular.module('hwrChatApp')
               $scope.user = user;
             });
             $scope.confirmPwPopup = false;
-            $mdToast.showSimple('Passwort falsch!');
+            $mdToast.showSimple($filter('translate')('AlertPwWrong'));
           }
         });
       } else {

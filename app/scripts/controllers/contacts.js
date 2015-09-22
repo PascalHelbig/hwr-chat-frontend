@@ -8,7 +8,7 @@
  * Controller of the hwrChatApp
  */
 angular.module('hwrChatApp')
-  .controller('ContactsCtrl', function ($scope, screenService, $mdSidenav, $interval, userService, $state, $mdToast) {
+  .controller('ContactsCtrl', function ($scope, screenService, $mdSidenav, $interval, userService, $state, $mdToast, $filter) {
     $scope.chats = [];
     userService.isLoaded().then(function() {
       $scope.user = userService.me();
@@ -36,7 +36,7 @@ angular.module('hwrChatApp')
       userService.isLoaded().then(function() {
         userService.logout();
       });
-      $mdToast.showSimple('Ausgeloggt!');
+      $mdToast.showSimple($filter('translate')('AlertLogout'));
       $state.go('layout_small.login');
     };
   });
