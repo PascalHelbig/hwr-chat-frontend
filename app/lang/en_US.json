@@ -48,7 +48,7 @@
   "AlertContactError": "No contact selected!",
   "AlertNetworkError": "Network error!",
   "AlertRegister": "Registration successful!",
-  "AlertSitePolicy": "Accept site policy!",
+  "AlertSitePolicy": "Accept terms & conditions!",
   "AlertPwIdent": "Password not identical!",
   "AlertChange": "Change successful!",
   "AlertPwWrong": "Wrong password!"
