@@ -29,7 +29,7 @@
     </div>
     <md-content flex="66" flex-order="2" class="md-whiteframe-z1" style="padding:10px; margin: 10px 10px"
                 ng-attr-id="{{($last ? 'last_message': '')}}">
-      <b><font color= "#FF0000">{{message.accountId}}</font></b>
+      <b color= "#FF0000">{{message.accountId}}</b>
       <div ng-bind-html="message.content | emoticons" style="word-wrap: break-word;"></div>
       <md-divider></md-divider>
       {{message.createdAt | date:'HH:mm'}}
