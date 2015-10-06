@@ -22,7 +22,7 @@ angular.module('hwrChatApp')
       $state.go('layout_small.login');
     });
     if(login){
-      userService.intervalPromiseChats = $interval(getChats, 500);
+      $interval(getChats, 500);
     }
     $scope.isMobile = screenService.isMobileView();
 

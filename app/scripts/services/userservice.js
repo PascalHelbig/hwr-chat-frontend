@@ -13,7 +13,7 @@ angular.module('hwrChatApp')
       token: null,
       id: null,
       data: {},
-      intervalPromise: null
+      msgIntervalPromise: null
     };
 
     userService.loadData = function () {
@@ -71,12 +71,12 @@ angular.module('hwrChatApp')
     };
 
     userService.logout = function () {
+      $interval.cancel(userService.msgIntervalPromise);
       localStorage.removeItem('token');
       localStorage.removeItem('id');
-      $interval.cancel(userService.intervalPromise);
+      userService.msgIntervalPromise = null;
       userService.token = null;
       userService.id = null;
-      userService.intervalPromise = null;
       userService.data = {};
       Restangular.setDefaultHeaders();
     };
