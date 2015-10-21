@@ -21,9 +21,15 @@ angular
     'ngEmoticons',
     'lumx',
     'restangular'
+  ],
+  'LoopbackSocketIntegration', [
+    'lbServices',
+    'ui-router'
   ])
-  .config(function ($stateProvider, $urlRouterProvider, $windowProvider, $mdThemingProvider, $translateProvider, $httpProvider, RestangularProvider) {
+  .config(function ($stateProvider, $urlRouterProvider, $windowProvider, $mdThemingProvider, $translateProvider, $httpProvider, RestangularProvider, $locationProvider) {
     RestangularProvider.setBaseUrl('http://localhost:3000/api/');
+    $locationProvider.html5Mode(false);
+    $urlRouterProvider.otherwise('/');
 
     // Wenn Bildschirm Breite kleiner als 600px, dann mobile Ansicht
     $stateProvider
@@ -38,7 +44,9 @@ angular
         views: {
           content: {
             templateUrl: 'views/login.html',
-            controller: 'LoginCtrl'
+            controller: 'LoginCtrl',
+            //Here unsubscribe function must be called to unsubcribe all events on state change
+            onExit: unSubscribeAll
           },
           submenu: {
             templateUrl: 'views/subMenu.html'
@@ -174,8 +182,11 @@ angular
           }
         }
       });
-
-
+    //Function for unsubscribing..
+    var unSubscribeAll = function(PubSub){
+      //Unsubscribe all listeners..
+      PubSub.unSubscribeAll();
+    };
 
     // for any unmatched url:
     $urlRouterProvider.otherwise('/login');
