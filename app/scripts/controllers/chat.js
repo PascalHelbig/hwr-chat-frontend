@@ -22,9 +22,10 @@ angular.module('hwrChatApp')
       $scope.chat.getList('messages').then(function (messages) {
         $scope.messages = messages;
         lastMessageId = $scope.messages[$scope.messages.length - 1].id;
-        userService.msgIntervalPromise = $interval(loadMessages, 5000);
+        userService.intervalPromiseChat = $interval(loadMessages, 5000);
       });
     });
+
 
     /**
      * Nachrichten werden per Polling geladen

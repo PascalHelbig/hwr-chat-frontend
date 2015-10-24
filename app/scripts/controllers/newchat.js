@@ -58,7 +58,7 @@ angular.module('hwrChatApp')
           break;
         case 1:
           // ToDo: Chats brauchen immer einen Namen. Wie ist das bei einem Chat mit nur zwei Personen. Vlt Backend anpassen.
-          userService.me().all('chats').post({name: 'ohne name'}).then(function (chat) {
+          userService.me().all('chats').post({name: $scope.selectedAccounts[0].firstname + ' ' + $scope.selectedAccounts[0].lastname}).then(function (chat) {
             Restangular.one('chats', chat.id).one('accounts/rel', $scope.selectedAccounts[0].id).customPUT({});
             $state.go('layout_2screens.chat', {id: chat.id});
           }, function () {
