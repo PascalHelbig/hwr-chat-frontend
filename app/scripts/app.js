@@ -21,10 +21,6 @@ angular
     'ngEmoticons',
     'lumx',
     'restangular'
-  ],
-  'LoopbackSocketIntegration', [
-    'lbServices',
-    'ui-router'
   ])
   .config(function ($stateProvider, $urlRouterProvider, $windowProvider, $mdThemingProvider, $translateProvider, $httpProvider, RestangularProvider, $locationProvider) {
     RestangularProvider.setBaseUrl('http://localhost:3000/api/');

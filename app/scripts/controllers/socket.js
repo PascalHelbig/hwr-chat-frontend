@@ -1,5 +1,5 @@
 'use strict';
-angular.module('LoopbackSocketIntegration')
+angular.module('hwrChatApp')
 
 //Here LoopBackAuth service must be provided as argument for authenticating the user
   .factory('socket', function(userService){

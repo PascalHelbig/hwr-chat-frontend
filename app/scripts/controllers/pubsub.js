@@ -1,5 +1,5 @@
 'use strict';
-angular.module('LoopbackSocketIntegration')
+angular.module('hwrChatApp')
   .factory('PubSub', function (socket) {
     var container =  [];
     return {
