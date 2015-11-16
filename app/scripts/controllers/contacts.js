@@ -8,7 +8,8 @@
  * Controller of the hwrChatApp
  */
 angular.module('hwrChatApp')
-  .controller('ContactsCtrl', function ($scope, screenService, $mdSidenav, $interval, userService, $state, $mdToast, $filter) {
+  .controller('ContactsCtrl', function ($scope, screenService, $mdSidenav, $interval, userService, $state, $mdToast, $filter, PubSub) {
+
     $scope.chats = [];
     var login = null;
     userService.isLoaded().then(function() {
@@ -33,6 +34,33 @@ angular.module('hwrChatApp')
     $scope.openChat = function(data){
       $state.go('layout_2screens.chat', {id: data});
     };
+
+    PubSub.subscribe({
+      collectionName: 'Chat',
+      method : 'POST'
+    }, function(data){
+      //Logic for callback function on new chats
+      $scope.chats.push(data);
+      $scope.$apply();
+    });
+
+    PubSub.subscribe({
+      collectionName: 'Chats',
+      method : 'PUT'
+      //modelId : chatList[i].id
+    }, function(data){
+      //Logic for callback function on updated chats
+      console.log(data);
+    });
+
+    PubSub.subscribe({
+      collectionName: 'Chats',
+      method : 'DELETE'
+      //modelId : chatList[i].id
+    }, function(data){
+      //Logic for callback function on delete chats
+      console.log(data);
+    });
 
     $scope.logout = function() {
       userService.isLoaded().then(function() {
