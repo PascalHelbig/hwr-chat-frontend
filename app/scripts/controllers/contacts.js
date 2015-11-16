@@ -22,9 +22,7 @@ angular.module('hwrChatApp')
     }, function () {
       $state.go('layout_small.login');
     });
-    if(login){
-      $interval(getChats, 500);
-    }
+
     $scope.isMobile = screenService.isMobileView();
 
     $scope.openSideNav = function() {
@@ -35,32 +33,6 @@ angular.module('hwrChatApp')
       $state.go('layout_2screens.chat', {id: data});
     };
 
-    PubSub.subscribe({
-      collectionName: 'Chat',
-      method : 'POST'
-    }, function(data){
-      //Logic for callback function on new chats
-      $scope.chats.push(data);
-      $scope.$apply();
-    });
-
-    PubSub.subscribe({
-      collectionName: 'Chats',
-      method : 'PUT'
-      //modelId : chatList[i].id
-    }, function(data){
-      //Logic for callback function on updated chats
-      console.log(data);
-    });
-
-    PubSub.subscribe({
-      collectionName: 'Chats',
-      method : 'DELETE'
-      //modelId : chatList[i].id
-    }, function(data){
-      //Logic for callback function on delete chats
-      console.log(data);
-    });
 
     $scope.logout = function() {
       userService.isLoaded().then(function() {

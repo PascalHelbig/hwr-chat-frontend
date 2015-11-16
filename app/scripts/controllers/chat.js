@@ -8,12 +8,19 @@
  * Controller of the hwrChatApp
  */
 angular.module('hwrChatApp')
-  .controller('ChatCtrl', function ($scope, screenService, $stateParams, $mdDialog, $mdToast, $filter, $state, $interval, Restangular, userService) {
+  .controller('ChatCtrl', function ($scope, screenService, $stateParams, $mdDialog, $mdToast, $filter, $state, $interval, Restangular, userService, socket) {
+    socket.then(function (socket) {
+      socket.on('NewMessages', function (data) {
+        $scope.messages.push(data.data);
+        $scope.$apply();
+      });
+    });
+
     var lastMessageId = 0;
     $scope.messages = [];
     $scope.isMobile = screenService.isMobileView();
 
-    userService.isLoaded().then(function() {
+    userService.isLoaded().then(function () {
       $scope.userID = userService.me().id;
     });
 
@@ -22,7 +29,7 @@ angular.module('hwrChatApp')
       $scope.chat.getList('messages').then(function (messages) {
         $scope.messages = messages;
         lastMessageId = $scope.messages[$scope.messages.length - 1].id;
-        userService.intervalPromiseChat = $interval(loadMessages, 5000);
+        //userService.intervalPromiseChat = $interval(loadMessages, 5000);
       });
     });
 
@@ -48,13 +55,13 @@ angular.module('hwrChatApp')
       if ($scope.messageText === '') {
         return;
       }
-      userService.isLoaded().then(function() {
+      userService.isLoaded().then(function () {
         $scope.messages.post({
           content: $scope.messageText,
           accountId: userService.me().id
         }).then(function () {
           // Wenn die Nachricht erfolgreich gesendet, dann lade sofort die Nachrichten nach:
-          loadMessages();
+          //loadMessages();
         }, function () {
           $mdToast.showSimple($filter('translate')('AlertMsgError'));
         });
@@ -85,7 +92,7 @@ angular.module('hwrChatApp')
       }).then(function (chat) {
         $scope.chat = chat;
       }, function (response) {
-        if(response.err === true) {
+        if (response.err === true) {
           $mdToast.showSimple($filter('translate')('AlertError'));
         }
       });
@@ -94,7 +101,7 @@ angular.module('hwrChatApp')
      *Chat verlassen und wenn erfolgreich navigation zu contacts view
      */
     $scope.leaveChat = function () {
-      userService.isLoaded().then(function() {
+      userService.isLoaded().then(function () {
         userService.me().one('chats/rel', $scope.chat.id).remove().then(function () {
           $scope.chat.all('messages').post({content: userService.me().firstname + ' hat den Chat verlassen.'});
           $mdToast.showSimple($filter('translate')('AlertLeaveChat'));
@@ -105,7 +112,7 @@ angular.module('hwrChatApp')
       });
     };
 
-    $scope.showEmojis = function(){
+    $scope.showEmojis = function () {
       console.log($scope.messages);
     };
 
