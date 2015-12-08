@@ -8,13 +8,11 @@
  * Factory in the hwrChatApp.
  */
 angular.module('hwrChatApp')
-  .factory('userService', function (Restangular, $q, $interval) {
+  .factory('userService', function (Restangular, $q) {
     var userService = {
       token: null,
       id: null,
-      data: {},
-      intervalPromiseChat: null,
-      intervalPromiseChats: null
+      data: {}
     };
 
     userService.loadData = function () {
@@ -74,10 +72,8 @@ angular.module('hwrChatApp')
     userService.logout = function () {
       localStorage.removeItem('token');
       localStorage.removeItem('id');
-      $interval.cancel(userService.intervalPromise);
       userService.token = null;
       userService.id = null;
-      userService.intervalPromise = null;
       userService.data = {};
       Restangular.setDefaultHeaders();
     };

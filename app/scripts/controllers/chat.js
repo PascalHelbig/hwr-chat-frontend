@@ -8,7 +8,7 @@
  * Controller of the hwrChatApp
  */
 angular.module('hwrChatApp')
-  .controller('ChatCtrl', function ($scope, screenService, $stateParams, $mdDialog, $mdToast, $filter, $state, $interval, Restangular, userService, socket) {
+  .controller('ChatCtrl', function ($scope, screenService, $stateParams, $mdDialog, $mdToast, $filter, $state, Restangular, userService, socket) {
     socket.then(function (socket) {
       socket.on('NewMessages', function (data) {
         $scope.messages.push(data.data);
@@ -29,14 +29,12 @@ angular.module('hwrChatApp')
       $scope.chat.getList('messages').then(function (messages) {
         $scope.messages = messages;
         lastMessageId = $scope.messages[$scope.messages.length - 1].id;
-        //userService.intervalPromiseChat = $interval(loadMessages, 5000);
       });
     });
 
 
     /**
-     * Nachrichten werden per Polling geladen
-     * dazu wird $interval genutzt
+     * Nachrichten werden geladen
      */
     function loadMessages() {
       $scope.chat.getList('messages', {filter: {where: {id: {gt: lastMessageId}}}}).then(function (messages) {
