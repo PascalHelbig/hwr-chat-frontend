@@ -8,7 +8,13 @@
  * Controller of the hwrChatApp
  */
 angular.module('hwrChatApp')
-  .controller('ContactsCtrl', function ($scope, screenService, $mdSidenav, $interval, userService, $state, $mdToast, $filter, PubSub) {
+  .controller('ContactsCtrl', function ($scope, screenService, $mdSidenav, $interval, userService, $state, $mdToast, $filter, socket) {
+    socket.then(function (socket) {
+      socket.on('NewChat', function (data) {
+        console.log(data);
+        $scope.chats = userService.me().getList('chats').$object;
+      });
+    });
 
     $scope.chats = [];
     var login = null;
