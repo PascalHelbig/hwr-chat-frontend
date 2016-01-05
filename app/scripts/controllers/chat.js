@@ -32,19 +32,6 @@ angular.module('hwrChatApp')
       });
     });
 
-
-    /**
-     * Nachrichten werden geladen
-     */
-    function loadMessages() {
-      $scope.chat.getList('messages', {filter: {where: {id: {gt: lastMessageId}}}}).then(function (messages) {
-        for (var i = 0; i < messages.length; i++) {
-          $scope.messages.push(messages[i]);
-        }
-        lastMessageId = $scope.messages[$scope.messages.length - 1].id;
-      });
-    }
-
     /**
      * Senden der Nachricht aus dem Nachrichtenfeld an Backend
      * und visualisieren in Chat
@@ -53,18 +40,15 @@ angular.module('hwrChatApp')
       if ($scope.messageText === '') {
         return;
       }
-      userService.isLoaded().then(function () {
-        $scope.messages.post({
-          content: $scope.messageText,
-          accountId: userService.me().id
-        }).then(function () {
-          // Wenn die Nachricht erfolgreich gesendet, dann lade sofort die Nachrichten nach:
-          //loadMessages();
-        }, function () {
-          $mdToast.showSimple($filter('translate')('AlertMsgError'));
-        });
-        $scope.messageText = '';
+
+      $scope.messages.post({
+        content: $scope.messageText,
+      }).then(function () {
+
+      }, function () {
+        $mdToast.showSimple($filter('translate')('AlertMsgError'));
       });
+      $scope.messageText = '';
     };
 
     $scope.renameChat = function () {
