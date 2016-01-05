@@ -18,6 +18,7 @@ angular.module('hwrChatApp')
 
     var lastMessageId = 0;
     $scope.messages = [];
+    $scope.accounts = [];
     $scope.isMobile = screenService.isMobileView();
 
     userService.isLoaded().then(function () {
@@ -30,6 +31,15 @@ angular.module('hwrChatApp')
         $scope.messages = messages;
         lastMessageId = $scope.messages[$scope.messages.length - 1].id;
       });
+
+      // Lade alle ChatMembers, um Namen anzeigen zukönnen
+      $scope.chat.getList('accounts').then(function(accounts) {
+        $scope.accounts = {};
+        accounts.forEach(function(account) {
+          $scope.accounts[account.id] = account;
+        });
+      });
+
     });
 
     /**
