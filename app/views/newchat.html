@@ -14,7 +14,7 @@
 <md-content class="md-padding">
   <md-chips>
     <md-chip ng-repeat="account in selectedAccounts" ng-click="removeUser(account)" style="cursor: pointer">
-      <span>{{account.firstname}} {{account.lastname}}</span>
+      <span><account account="account" /></span>
     </md-chip>
   </md-chips>
 
@@ -30,7 +30,7 @@
     <md-list-item>
       <md-button style="width:100%" ng-click="addUser(contact)">
         <div class="md-list-item-text">
-          <h4>{{contact.firstname +" "+ contact.lastname}}</h4>
+          <h4><account account="contact" /></h4>
         </div>
       </md-button>
     </md-list-item>
