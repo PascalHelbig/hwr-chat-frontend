@@ -1,12 +1,12 @@
 <md-toolbar class="md-primary md-whiteframe-z3"">
   <div class="md-toolbar-tools">
     <md-button layout="row" layout-align="start center" ui-sref="layout_2screens.contacts">
-      <i class="mdi mdi-arrow-left"></i>
+      <md-icon>arrow_back</md-icon>
       {{'NewChat' | translate}}
     </md-button>
     <span flex></span>
     <md-button ng-click="createChat()">
-      <i class="mdi mdi-check"></i>
+      <md-icon>check</md-icon>
     </md-button>
   </div>
 </md-toolbar>
@@ -18,7 +18,7 @@
     </md-chip>
   </md-chips>
 
-  <md-input-container>
+  <md-input-container style="width: 100%">
     <label >{{'Search' | translate}}</label>
     <input type="text" ng-model="query">
   </md-input-container>
@@ -30,7 +30,7 @@
     <md-list-item>
       <md-button style="width:100%" ng-click="addUser(contact)">
         <div class="md-list-item-text">
-          <h4><account account="contact" /></h4>
+          <account account="contact" />
         </div>
       </md-button>
     </md-list-item>

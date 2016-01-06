@@ -18,8 +18,6 @@ angular
     'sun.scrollable',
     'pascalprecht.translate',
     'ngEmbed',
-    'ngEmoticons',
-    'lumx',
     'restangular'
   ])
   .config(function ($stateProvider, $urlRouterProvider, $windowProvider, $mdThemingProvider, $translateProvider, $httpProvider, RestangularProvider, $locationProvider) {

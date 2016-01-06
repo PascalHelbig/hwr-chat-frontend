@@ -1,24 +1,23 @@
 <md-toolbar>
   <div class="md-toolbar-tools md-whiteframe-z3">
       <md-button layout="row" layout-align="start center" ui-sref="layout_2screens.contacts">
-        <i class="mdi mdi-arrow-left"></i>
+        <md-icon>arrow_back</md-icon>
       </md-button>
     <img class="logo" src="images/hwr_quadrat.png">
     {{chat.name}}
     <span flex></span>
-    <lx-dropdown position="right" >
-      <button class="btn btn--m btn--white btn--icon" lx-ripple lx-dropdown-toggle>
-        <i class="mdi mdi-dots-vertical"></i>
-      </button>
-      <lx-dropdown-menu>
-        <ul>
-          <li ng-click="leaveChat()"><a class="dropdown-link">Chat verlassen</a></li>
-          <li ng-click="renameChat()"><a class="dropdown-link">Chat umbenennen</a></li>
-          <li class="dropdown-divider"></li>
-          <li><a class="dropdown-link" ui-sref="layout_small.settings">Einstellungen</a></li>
-        </ul>
-      </lx-dropdown-menu>
-    </lx-dropdown>
+    <md-menu>
+      <!-- Trigger element is a md-button with an icon -->
+      <md-button ng-click="$mdOpenMenu($event)" class="md-icon-button" aria-label="Open sample menu">
+        <md-icon>more_vert</md-icon>
+      </md-button>
+      <md-menu-content>
+        <md-menu-item><md-button ng-click="leaveChat()"><md-icon>close</md-icon>Chat verlassen</md-button></md-menu-item>
+        <md-menu-item><md-button ng-click="renameChat()"><md-icon>edit</md-icon>Chat umbenennen</md-button></md-menu-item>
+        <md-menu-divider></md-menu-divider>
+        <md-menu-item><md-button ui-sref="layout_small.settings"><md-icon>settings</md-icon>Einstellungen</md-button></md-menu-item>
+      </md-menu-content>
+    </md-menu>
   </div>
 </md-toolbar>
 <div style="position:absolute; top:64px; bottom:160px" ng-style="{'width' : (isMobile ? '100%' : '66%')}" scrollable>
@@ -29,7 +28,8 @@
     <md-content flex="66" flex-order="2" class="md-whiteframe-z1" style="padding:10px; margin: 10px 10px"
                 ng-attr-id="{{($last ? 'last_message': '')}}">
       <b color= "#FF0000"><account account="accounts[message.accountId]"></account></b>
-      <div ng-bind-html="message.content | emoticons" style="word-wrap: break-word;"></div>
+      <!-- ngEmbed benötigt ein String. Wenn Messages nur aus Zahlen besteht, sendet Loopback ein Int zurück, deshalb .toString() -->
+      <div ng-bind-html=" message.content.toString() | embed" style="word-wrap: break-word;"></div>
       <md-divider></md-divider>
       {{message.createdAt | date:'HH:mm'}}
     </md-content>
@@ -49,17 +49,17 @@
     <md-content class="md-padding">
       <div layout="row" layout-wrap >
         <div flex="100" >
-          <md-input-container>
+          <md-input-container style="width:100%">
             <label>{{'Message' | translate}}</label>
             <textarea ng-model="messageText" ng-enter="send()"></textarea>
           </md-input-container>
         </div>
         <div layout-align="center left">
           <md-button class="md-fab md-mini md-warn" ng-disabled="true">
-            <i class="mdi mdi-attachment"></i>
+            <md-icon>attachment</md-icon>
           </md-button>
           <md-button class="md-fab md-mini md-warn" ng-click="showEmojis()">
-            <i class="mdi mdi-emoticon-devil"></i>
+            <md-icon>insert_emoticon</md-icon>
           </md-button>
         </div>
         <div flex>

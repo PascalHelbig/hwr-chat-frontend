@@ -1,13 +1,22 @@
-<md-content class="md-padding">
-<md-button  style="width:90%" ui-sref="layout_small.newchat"><i class="mdi icon--l mdi-comment-text" ></i>{{'NewChat' | translate}}
-</md-button>
-<md-divider></md-divider>
-<md-button style="width:90%"  ui-sref="layout_small.settings"><i class="mdi icon--l mdi-settings"  ></i>{{'Settings' | translate}}
-</md-button>
-  <md-divider></md-divider>
-  <md-button style="width:90%"  ui-sref="layout_small.info"><i class="mdi icon--l mdi-information" ></i>{{'LegalInfo' | translate}}
-  </md-button>
-<md-divider></md-divider>
-<md-button style="width:90%"  ng-click="logout()"><i class="mdi icon--l mdi-logout" ></i>{{'LogOut' | translate}}
-</md-button>
-</md-content>
+<md-menu-content>
+  <md-menu-item>
+    <md-button ui-sref="layout_small.newchat">
+      <md-icon>comment</md-icon> {{'NewChat' | translate}}
+    </md-button>
+  </md-menu-item>
+  <md-menu-item>
+    <md-button ui-sref="layout_small.settings">
+      <md-icon>settings</md-icon> {{'Settings' | translate}}
+    </md-button>
+  </md-menu-item>
+  <md-menu-item>
+    <md-button ui-sref="layout_small.info">
+      <md-icon>info</md-icon> {{'LegalInfo' | translate}}
+    </md-button>
+  </md-menu-item>
+  <md-menu-item>
+    <md-button ng-click="logout()">
+      <md-icon>cloud_off</md-icon> {{'LogOut' | translate}}
+    </md-button>
+  </md-menu-item>
+</md-menu-content>
