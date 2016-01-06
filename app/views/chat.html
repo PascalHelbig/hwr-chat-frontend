@@ -51,7 +51,7 @@
         <div flex="100" >
           <md-input-container>
             <label>{{'Message' | translate}}</label>
-            <textarea ng-model="messageText"></textarea>
+            <textarea ng-model="messageText" ng-enter="send()"></textarea>
           </md-input-container>
         </div>
         <div layout-align="center left">
