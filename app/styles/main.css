@@ -5,7 +5,7 @@
   padding: 0.2em 0;
 }
 
-body {
+body, body > div {
   padding: 0;
   background-color: #eeeeee;
 }
