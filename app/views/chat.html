@@ -29,7 +29,7 @@
                 ng-attr-id="{{($last ? 'last_message': '')}}">
       <b color= "#FF0000"><account account="accounts[message.accountId]"></account></b>
       <!-- ngEmbed benötigt ein String. Wenn Messages nur aus Zahlen besteht, sendet Loopback ein Int zurück, deshalb .toString() -->
-      <div ng-bind-html=" message.content.toString() | embed" style="word-wrap: break-word;"></div>
+      <div ng-bind-html=" message.content.toString() | embed" style="word-wrap: break-word; white-space: pre-wrap;"></div>
       <md-divider></md-divider>
       {{message.createdAt | date:'HH:mm'}}
     </md-content>
