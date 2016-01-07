@@ -85,11 +85,6 @@ angular.module('hwrChatApp')
     };
 
     $scope.filterOwnUser = function(account){
-        if(account.id === userService.me().id)
-        {
-          return false; // this will be listed in the results
-        }
-
-        return true; // otherwise it won't be within the results
+      return account.id !== userService.me().id
     };
   });

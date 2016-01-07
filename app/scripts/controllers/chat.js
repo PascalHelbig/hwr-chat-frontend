@@ -18,6 +18,9 @@ angular.module('hwrChatApp')
       });
     });
 
+    // ToDo: Variable aus Backend ob Gruppenchat oder nicht einpflegen
+    $scope.isGroupChat = true;
+
     var lastMessageId = 0;
     $scope.messages = [];
     $scope.accounts = [];
