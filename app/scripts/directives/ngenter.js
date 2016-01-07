@@ -9,7 +9,7 @@
 angular.module('hwrChatApp')
   .directive('ngEnter', function () {
     return function (scope, element, attrs) {
-      element.bind("keydown keypress", function (event) {
+      element.bind('keydown keypress', function (event) {
         // Wenn Ctrl oder Shift gedrück ist, dann ignoriere Tastendruck
         if (event.ctrlKey || event.shiftKey) {
           return;
