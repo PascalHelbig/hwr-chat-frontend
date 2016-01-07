@@ -18,7 +18,7 @@
 
 <md-content style="position:absolute; top:64px; bottom:0" class="md-padding" ng-style="{'width' : (isMobile ? '100%' : '33%')}" scrollable>
   <md-list>
-    <md-list-item ng-repeat="chat in chats">
+    <md-list-item ng-repeat="chat in chats | orderBy:'-lastMessage'">
           <md-button class="md-warn" ng-click="openChat(chat.id)" style="width: 100%">
             {{chat.name}}
           </md-button>

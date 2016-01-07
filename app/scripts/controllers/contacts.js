@@ -9,10 +9,25 @@
  */
 angular.module('hwrChatApp')
   .controller('ContactsCtrl', function ($scope, screenService, $mdSidenav, userService, $state, $mdToast, $filter, socket) {
+    function getChats() {
+      userService.me().getList('chats').then(function (chats) {
+        $scope.chats = chats;
+      });
+    }
+
     socket.then(function (socket) {
       socket.on('NewChat', function (data) {
-        console.log(data);
-        $scope.chats = userService.me().getList('chats').$object;
+        getChats();
+      });
+      socket.on('NewMessages', function (message) {
+        // Neue Message -> finde den dazugehörigen Chat:
+        for (var i = 0; i < $scope.chats.length; i++) {
+          if ($scope.chats[i].id === message.data.chatId) {
+            // Wenn Chat gefunden, update lastMessage:
+            $scope.chats[i].lastMessage = message.data.createdAt;
+            return;
+          }
+        }
       });
     });
 
@@ -21,9 +36,6 @@ angular.module('hwrChatApp')
     userService.isLoaded().then(function() {
       $scope.user = userService.me();
       login = true;
-      function getChats() {
-        $scope.chats = userService.me().getList('chats').$object;
-      }
       getChats();
     }, function () {
       $state.go('layout_small.login');
