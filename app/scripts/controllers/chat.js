@@ -110,5 +110,9 @@ angular.module('hwrChatApp')
       console.log($scope.messages);
     };
 
+    $scope.openSettings = function(){
+      $state.go('layout_small.settings');
+    };
+
   });
 
