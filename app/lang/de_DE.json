@@ -51,5 +51,13 @@
   "AlertSitePolicy": "Nutzungsbestimmungen akzeptieren!",
   "AlertPwIdent": "Passwort nicht identisch!",
   "AlertChange": "Änderung erfolgreich!",
-  "AlertPwWrong": "Passwort falsch!"
+  "AlertPwWrong": "Passwort falsch!",
+  "RenameChat": "Chat umbenennen",
+  "AddUser": "Teilnehmer hinzufügen",
+  "Send": "Senden",
+  "Quit": "Abbrechen",
+  "CreateChat" : "Chat erstellen",
+  "LeftTheChat": " hat den Chat verlassen.",
+  "MessageGroupCreate1": " hat den Chat ",
+  "MessageGroupCreate2": " erstellt."
 }

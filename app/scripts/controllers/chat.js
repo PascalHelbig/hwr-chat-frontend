@@ -100,21 +100,25 @@ angular.module('hwrChatApp')
     $scope.leaveChat = function () {
       userService.isLoaded().then(function () {
         userService.me().one('chats/rel', $scope.chat.id).remove().then(function () {
-          $scope.chat.all('messages').post({content: userService.me().firstname + ' hat den Chat verlassen.'});
+          $scope.chat.all('messages').post({content: userService.me().firstname + $filter('translate')('AlertLeaveChat')});
           $mdToast.showSimple($filter('translate')('AlertLeaveChat'));
           $state.go('layout_2screens.contacts');
         }, function () {
-          $mdToast.showSimple($filter('translate')('AlertLeaveChatError'));
+          $mdToast.showSimple($filter('translate')('LeftTheChat'));
         });
       });
     };
 
     $scope.showEmojis = function () {
-      console.log($scope.messages);
+      //ToDo Emojis-Logik
     };
 
     $scope.openSettings = function(){
       $state.go('layout_small.settings');
+    };
+
+    $scope.addUser = function(){
+      //ToDo Anfrage an Backend
     };
 
   });

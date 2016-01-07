@@ -37,7 +37,7 @@ angular.module('hwrChatApp')
             });
             Restangular.one('chats', chat.id).all('messages').post({
               accountId: userService.me().id,
-              content: userService.me().firstname + ' hat den Gruppenchat ' + chat.name + ' angelegt.'
+              content: userService.me().firstname + $filter('translate')('MessageGroupCreate1')+ chat.name + $filter('translate')('MessageGroupCreate2')
             }).then(function () {
               $mdDialog.hide(chat);
             }, function () {
@@ -61,6 +61,14 @@ angular.module('hwrChatApp')
           userService.me().all('chats').post({name: $scope.selectedAccounts[0].firstname + ' ' + $scope.selectedAccounts[0].lastname}).then(function (chat) {
             Restangular.one('chats', chat.id).one('accounts/rel', $scope.selectedAccounts[0].id).customPUT({});
             $state.go('layout_2screens.chat', {id: chat.id});
+            Restangular.one('chats', chat.id).all('messages').post({
+              accountId: userService.me().id,
+              content: userService.me().firstname + $filter('translate')('MessageGroupCreate1')+ chat.name + $filter('translate')('MessageGroupCreate2')
+            }).then(function () {
+              $mdDialog.hide(chat);
+            }, function () {
+              $mdDialog.cancel();
+            });
           }, function () {
             $mdToast.showSimple($filter('translate')('AlertNetworkError'));
           });
