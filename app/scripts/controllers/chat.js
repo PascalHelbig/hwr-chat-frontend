@@ -10,9 +10,11 @@
 angular.module('hwrChatApp')
   .controller('ChatCtrl', function ($scope, screenService, $stateParams, $mdDialog, $mdToast, $filter, $state, Restangular, userService, socket) {
     socket.then(function (socket) {
-      socket.on('NewMessages', function (data) {
-        $scope.messages.push(data.data);
-        $scope.$apply();
+      socket.on('NewMessages', function (message) {
+        if (message.data.chatId === parseInt($stateParams.id)) {
+          $scope.messages.push(message.data);
+          $scope.$apply();
+        }
       });
     });
 
