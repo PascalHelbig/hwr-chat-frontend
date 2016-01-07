@@ -26,7 +26,7 @@
 
 
 <md-list class="md-padding">
-  <div ng-repeat="contact in contacts | filter:query | filter:filterAlreadyAdded | orderBy:['firstname', 'lastname']">
+  <div ng-repeat="contact in contacts | filter:query | filter:filterOwnUser | filter:filterAlreadyAdded | orderBy:['firstname', 'lastname']">
     <md-list-item>
       <md-button style="width:100%" ng-click="addUser(contact)">
         <div class="md-list-item-text">
