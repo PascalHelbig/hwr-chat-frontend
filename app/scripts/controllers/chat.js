@@ -27,6 +27,15 @@ angular.module('hwrChatApp')
       $scope.userID = userService.me().id;
     });
 
+    function loadAccounts() {
+      $scope.chat.getList('accounts').then(function (accounts) {
+        $scope.accounts = {};
+        accounts.forEach(function (account) {
+          $scope.accounts[account.id] = account;
+        });
+      });
+    }
+
     Restangular.one('chats', $stateParams.id).get().then(function (chat) {
       $scope.chat = chat;
       $scope.chat.getList('messages').then(function (messages) {
@@ -35,13 +44,7 @@ angular.module('hwrChatApp')
       });
 
       // Lade alle ChatMembers, um Namen anzeigen zukönnen
-      $scope.chat.getList('accounts').then(function(accounts) {
-        $scope.accounts = {};
-        accounts.forEach(function(account) {
-          $scope.accounts[account.id] = account;
-        });
-      });
-
+      loadAccounts();
     });
 
     /**
@@ -110,13 +113,54 @@ angular.module('hwrChatApp')
       //ToDo Emojis-Logik
     };
 
-    $scope.openSettings = function(){
+    $scope.openSettings = function () {
       $state.go('layout_small.settings');
     };
 
-    $scope.addUser = function(){
-      //ToDo Anfrage an Backend
-    };
+    $scope.addUser = function () {
+      function AddUserCtrl($scope,  messages, chat, $mdDialog, Restangular, accounts) {
+        $scope.contacts = Restangular.all('accounts').getList().$object;
+        $scope.confirmScreen = false;
+        $scope.selectedAccount = {};
+        $scope.chat = chat;
 
+        $scope.filterAlreadyAdded = function (account) {
+          return !(account.id.toString() in accounts);
+        };
+
+        $scope.add = function (account) {
+          $scope.confirmScreen = true;
+          $scope.selectedAccount = account;
+        };
+
+        $scope.confirm = function (account) {
+          Restangular.one('chats', chat.id).one('accounts/rel', account.id).customPUT({}).then(function () {
+            messages.post({
+              content: account.firstname + ' ' + account.lastname + ' wurde hinzugefügt.'
+            });
+            $mdDialog.hide();
+          });
+        };
+
+        $scope.cancel = function() {
+          $mdDialog.cancel();
+        };
+      }
+
+      $mdDialog.show({
+        controller: AddUserCtrl,
+        templateUrl: 'views/addUser.html',
+        locals: {
+          chat: $scope.chat,
+          messages: $scope.messages,
+          accounts: $scope.accounts
+        },
+        clickOutsideToClose: true
+      }).then(function () {
+        loadAccounts();
+      }, function () {
+
+      });
+    };
   });
 
