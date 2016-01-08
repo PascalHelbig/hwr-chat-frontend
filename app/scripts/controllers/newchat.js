@@ -31,7 +31,7 @@ angular.module('hwrChatApp')
 
       function NameDialogCtrl($scope, accounts, $mdDialog) {
         $scope.createChat = function() {
-          userService.me().all('chats').post({name: $scope.name}).then(function (chat) {
+          userService.me().all('chats').post({name: $scope.name, isGroup: true}).then(function (chat) {
             angular.forEach(accounts, function (account) {
               Restangular.one('chats', chat.id).one('accounts/rel', account.id).customPUT({});
             });
@@ -58,7 +58,7 @@ angular.module('hwrChatApp')
           break;
         case 1:
           // ToDo: Chats brauchen immer einen Namen. Wie ist das bei einem Chat mit nur zwei Personen. Vlt Backend anpassen.
-          userService.me().all('chats').post({name: $scope.selectedAccounts[0].firstname + ' ' + $scope.selectedAccounts[0].lastname}).then(function (chat) {
+          userService.me().all('chats').post({name: $scope.selectedAccounts[0].firstname + ' ' + $scope.selectedAccounts[0].lastname, isGroup: false}).then(function (chat) {
             Restangular.one('chats', chat.id).one('accounts/rel', $scope.selectedAccounts[0].id).customPUT({});
             $state.go('layout_2screens.chat', {id: chat.id});
             Restangular.one('chats', chat.id).all('messages').post({
@@ -93,6 +93,6 @@ angular.module('hwrChatApp')
     };
 
     $scope.filterOwnUser = function(account){
-      return account.id !== userService.me().id
+      return account.id !== userService.me().id;
     };
   });
