@@ -58,6 +58,8 @@
   "Quit": "Quit",
   "CreateChat" : "Create chat",
   "LeftTheChat": "has left the chat.",
-  "MessageGroupCreate1": " has created the chat ",
-  "MessageGroupCreate2": "."
+  "MessageGroupCreate": "{{account}} has created the chat {{chat}}.",
+  "Yes": "yes",
+  "No": " no",
+  "Would you like to add to chat": "Would you like to add {{account}} to {{chat}}?"
 }

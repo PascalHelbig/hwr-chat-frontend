@@ -8,7 +8,7 @@
  * Controller of the hwrChatApp
  */
 angular.module('hwrChatApp')
-  .controller('NewChatCtrl', function ($scope, screenService, $mdSidenav, Restangular, $mdToast, $filter, userService, $state, $mdDialog) {
+  .controller('NewChatCtrl', function ($scope, screenService, $mdSidenav, Restangular, $mdToast, $filter, userService, $state, $mdDialog, $translate) {
     $scope.isMobile = screenService.isMobileView();
     $scope.openSideNav = function () {
       $mdSidenav('left').toggle();
@@ -37,7 +37,7 @@ angular.module('hwrChatApp')
             });
             Restangular.one('chats', chat.id).all('messages').post({
               accountId: userService.me().id,
-              content: userService.me().firstname + $filter('translate')('MessageGroupCreate1')+ chat.name + $filter('translate')('MessageGroupCreate2')
+              content: $filter('translate')('MessageGroupCreate', {account: userService.me().firstname, chat: chat.name })
             }).then(function () {
               $mdDialog.hide(chat);
             }, function () {
@@ -63,7 +63,7 @@ angular.module('hwrChatApp')
             $state.go('layout_2screens.chat', {id: chat.id});
             Restangular.one('chats', chat.id).all('messages').post({
               accountId: userService.me().id,
-              content: userService.me().firstname + $filter('translate')('MessageGroupCreate1')+ chat.name + $filter('translate')('MessageGroupCreate2')
+              content: $filter('translate')('MessageGroupCreate', {account: userService.me().firstname, chat: chat.name })
             }).then(function () {
               $mdDialog.hide(chat);
             }, function () {
