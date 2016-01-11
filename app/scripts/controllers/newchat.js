@@ -8,7 +8,7 @@
  * Controller of the hwrChatApp
  */
 angular.module('hwrChatApp')
-  .controller('NewChatCtrl', function ($scope, screenService, $mdSidenav, Restangular, $mdToast, $filter, userService, $state, $mdDialog, $translate) {
+  .controller('NewChatCtrl', function ($scope, screenService, $mdSidenav, Restangular, $mdToast, $filter, userService, $state, $mdDialog) {
     $scope.isMobile = screenService.isMobileView();
     $scope.openSideNav = function () {
       $mdSidenav('left').toggle();
@@ -57,20 +57,35 @@ angular.module('hwrChatApp')
           $mdToast.showSimple($filter('translate')('AlertContactError'));
           break;
         case 1:
-          // ToDo: Chats brauchen immer einen Namen. Wie ist das bei einem Chat mit nur zwei Personen. Vlt Backend anpassen.
-          userService.me().all('chats').post({name: $scope.selectedAccounts[0].firstname + ' ' + $scope.selectedAccounts[0].lastname, isGroup: false}).then(function (chat) {
-            Restangular.one('chats', chat.id).one('accounts/rel', $scope.selectedAccounts[0].id).customPUT({});
-            $state.go('layout_2screens.chat', {id: chat.id});
-            Restangular.one('chats', chat.id).all('messages').post({
-              accountId: userService.me().id,
-              content: $filter('translate')('MessageGroupCreate', {account: userService.me().firstname, chat: chat.name })
-            }).then(function () {
-              $mdDialog.hide(chat);
+          userService.me().getList('chats').then(function (chats) {
+            for (var i = 0; i < chats.length; i++) {
+              // Wenn es einen Chat mit der ausgewählten Person gibt, dann gehe zum Chat:
+              if (chats[i].accountId === $scope.selectedAccounts[0].id) {
+                return $state.go('layout_2screens.chat', {id: chats[i].id});
+              }
+            }
+
+            // Es wurde keinen SingleChat mit der Person gefunden, also erstelle einen neuen:
+            userService.me().all('chats').post({
+              name: $scope.selectedAccounts[0].firstname + ' ' + $scope.selectedAccounts[0].lastname,
+              isGroup: false
+            }).then(function (chat) {
+              Restangular.one('chats', chat.id).one('accounts/rel', $scope.selectedAccounts[0].id).customPUT({});
+              $state.go('layout_2screens.chat', {id: chat.id});
+              Restangular.one('chats', chat.id).all('messages').post({
+                accountId: userService.me().id,
+                content: $filter('translate')('MessageGroupCreate', {
+                  account: userService.me().firstname,
+                  chat: chat.name
+                })
+              }).then(function () {
+                $mdDialog.hide(chat);
+              }, function () {
+                $mdDialog.cancel();
+              });
             }, function () {
-              $mdDialog.cancel();
+              $mdToast.showSimple($filter('translate')('AlertNetworkError'));
             });
-          }, function () {
-            $mdToast.showSimple($filter('translate')('AlertNetworkError'));
           });
           break;
         default:
