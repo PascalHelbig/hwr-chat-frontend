@@ -21,7 +21,7 @@ angular
     'restangular'
   ])
   .config(function ($stateProvider, $urlRouterProvider, $windowProvider, $mdThemingProvider, $translateProvider, $httpProvider, RestangularProvider, $locationProvider) {
-    RestangularProvider.setBaseUrl('http://localhost:3000/api/');
+    RestangularProvider.setBaseUrl('https://hwr-chat-backend.herokuapp.com/api/');
     $locationProvider.html5Mode(false);
     $urlRouterProvider.otherwise('/');
 

@@ -6,7 +6,7 @@ angular.module('hwrChatApp')
     return $q(function(resolve) {
       //Creating connection with server
       userService.isLoaded().then(function () {
-        var socket = io.connect('http://localhost:3000'); // jshint ignore:line
+        var socket = io.connect('https://hwr-chat-backend.herokuapp.com/'); // jshint ignore:line
         resolve(socket);
         var id = userService.token;
         var userId = userService.me().id;
