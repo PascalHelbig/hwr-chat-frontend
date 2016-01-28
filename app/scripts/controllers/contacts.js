@@ -16,7 +16,7 @@ angular.module('hwrChatApp')
     }
 
     socket.then(function (socket) {
-      socket.on('NewChat', function (data) {
+      socket.on('NewChat', function () {
         getChats();
       });
       socket.on('NewMessages', function (message) {

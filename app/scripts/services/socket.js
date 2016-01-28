@@ -3,10 +3,10 @@ angular.module('hwrChatApp')
 
 //Here LoopBackAuth service must be provided as argument for authenticating the user
   .factory('socket', function(userService, $q){
-    return $q(function(resolve, reject) {
+    return $q(function(resolve) {
       //Creating connection with server
       userService.isLoaded().then(function () {
-        var socket = io.connect('http://localhost:3000');
+        var socket = io.connect('http://localhost:3000'); // jshint ignore:line
         resolve(socket);
         var id = userService.token;
         var userId = userService.me().id;

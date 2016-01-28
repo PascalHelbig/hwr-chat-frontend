@@ -38,9 +38,7 @@ angular
         views: {
           content: {
             templateUrl: 'views/login.html',
-            controller: 'LoginCtrl',
-            //Here unsubscribe function must be called to unsubcribe all events on state change
-            onExit: unSubscribeAll
+            controller: 'LoginCtrl'
           },
           submenu: {
             templateUrl: 'views/subMenu.html'
@@ -176,11 +174,6 @@ angular
           }
         }
       });
-    //Function for unsubscribing..
-    var unSubscribeAll = function(PubSub){
-      //Unsubscribe all listeners..
-      PubSub.unSubscribeAll();
-    };
 
     // for any unmatched url:
     $urlRouterProvider.otherwise('/login');
