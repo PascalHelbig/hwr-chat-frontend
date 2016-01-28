@@ -38,9 +38,9 @@ module.exports = function (config) {
       'bower_components/angular-translate-storage-cookie/angular-translate-storage-cookie.js',
       'bower_components/angular-translate-storage-local/angular-translate-storage-local.js',
       'bower_components/angular-ui-router/release/angular-ui-router.js',
+      'bower_components/lodash/dist/lodash.compat.js',
       'bower_components/angular-sanitize/angular-sanitize.js',
       'bower_components/ng-embed/src/ng-embed.js',
-      'bower_components/lodash/lodash.js',
       'bower_components/restangular/dist/restangular.js',
       'bower_components/angular-mocks/angular-mocks.js',
       // endbower
